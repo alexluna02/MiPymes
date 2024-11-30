@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\Metodo_pagoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +23,6 @@ Route::get('/portafolio',PortafolioController::class);
 Route::view('/acerca','acerca');
 Route::view('/contacto','contacto');
 Route::post('/contacto',[ContactoController::class,'store'])->name('contacto');
+
+
+Route::resource('/metodo_pago',Metodo_pagoController::class);
