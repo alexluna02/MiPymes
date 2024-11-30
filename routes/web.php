@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\Detalle_ventaController;
 use App\Http\Controllers\Metodo_pagoController;
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,5 @@ Route::view('/acerca','acerca');
 Route::view('/contacto','contacto');
 Route::post('/contacto',[ContactoController::class,'store'])->name('contacto');
 
-
+Route::resource('/detalle_venta', Detalle_ventaController::class);
 Route::resource('/metodo_pago',Metodo_pagoController::class);
