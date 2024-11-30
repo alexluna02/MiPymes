@@ -98,7 +98,27 @@ class Detalle_ventaController extends Controller
 
         $detalle=Detalle_venta::findorfail($id);
 
-        $detalle->metodo=request()->input('metodo');
+        $cantidad = $request->input('cantidad');
+        $precio_unitario = $request->input('precio_unitario');
+        $subtotal = $cantidad * $precio_unitario;
+
+        $descuento = $request->input('descuento');
+        $descuentototal = ($descuento * $subtotal) / 100;
+
+        $impuesto = $request->input('impuesto');
+        $impuestototal = ($impuesto * $subtotal) / 100;
+
+        $total_linea = ($subtotal - $descuentototal) + $impuestototal;
+
+
+        $detalle->venta_id=request()->input('venta_id');
+        $detalle->producto_id=request()->input('producto_id');
+        $detalle->cantidad=$cantidad;
+        $detalle->precio_unitario=$precio_unitario;;
+        $detalle->subtotal=$subtotal;
+        $detalle->descuento=$descuento;
+        $detalle->impuesto=$impuesto;
+        $detalle->total_linea=$total_linea;
 
         $detalle->save();
 
