@@ -19,7 +19,7 @@
                 <th>Descripción</th>
                 <th>Precio</th>
                 <th>Cantidad en Stock</th>
-                <th>Tipo de Producto</th>
+                <th>Tipo de producto</th>
                 <th>Categoría</th>
                 <th>Marca</th>
                 <th>Modelo</th>

@@ -32,7 +32,7 @@
                         <form method="POST" action="{{ route('producto.store') }}" role="form">
                             {{ csrf_field() }}
 
-                            <!-- Nombre y Descripción -->
+                            <!-- Crear -->
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -46,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <!-- Precio y Cantidad en Stock -->
+                            
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -60,7 +60,7 @@
                                 </div>
                             </div>
 
-                            <!-- Tipo de Producto, Categoría, Marca y Modelo -->
+                            
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -87,7 +87,6 @@
                                 </div>
                             </div>
 
-                            <!-- Año de Fabricación -->
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
@@ -96,7 +95,6 @@
                                 </div>
                             </div>
 
-                            <!-- Botones -->
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" value="Guardar" class="btn btn-success btn-block">
