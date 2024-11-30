@@ -4,9 +4,9 @@ use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\ContactoController;
-
-use App\Http\Controllers\ProveedorController;
-use App\Http\Controllers\MantenimientoMaquinariaController;
+use App\Http\Controllers\ProductoController; // Mantener esta línea
+use App\Http\Controllers\ProveedorController; // Mantener esta línea
+use App\Http\Controllers\MantenimientoMaquinariaController; // Mantener esta línea
 
 /*
 |--------------------------------------------------------------------------  
@@ -22,16 +22,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('home',function(){
-    return view('home',['nombre'=>'Usuario invitado']);
+Route::get('home', function() {
+    return view('home', ['nombre' => 'Usuario invitado']);
 });
 
 Route::get('/portafolio', PortafolioController::class);
 Route::view('/acerca', 'acerca');
 Route::view('/contacto', 'contacto');
-Route::post('/contacto', [ContactoController::class,'store'])->name('contacto');
+Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto');
 
-// Resolución del conflicto: Mantener ambas rutas
 Route::resource('/cliente', ClienteController::class);
-Route::resource('/proveedor', ProveedorController::class);
-Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class);
+Route::resource('/producto', ProductoController::class); // Ruta para ProductoController
+Route::resource('/proveedor', ProveedorController::class); // Ruta para ProveedorController
+Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class); // Ruta para MantenimientoMaquinariaController
+
