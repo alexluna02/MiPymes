@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\ContactoController;
@@ -22,3 +24,5 @@ Route::get('/portafolio',PortafolioController::class);
 Route::view('/acerca','acerca');
 Route::view('/contacto','contacto');
 Route::post('/contacto',[ContactoController::class,'store'])->name('contacto');
+
+Route::resource('/cliente', ClienteController::class);
