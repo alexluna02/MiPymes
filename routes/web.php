@@ -2,6 +2,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\ContactoController;
+
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\MantenimientoMaquinariaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,3 +25,6 @@ Route::get('/portafolio',PortafolioController::class);
 Route::view('/acerca','acerca');
 Route::view('/contacto','contacto');
 Route::post('/contacto',[ContactoController::class,'store'])->name('contacto');
+
+Route::resource('/proveedor', ProveedorController::class);
+Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class);
