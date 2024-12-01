@@ -4,7 +4,6 @@
 <div class="row">
     <section class="content">
         <div class="col-md-8 col-md-offset-2">
-            <!-- Mostrar errores de validación -->
             @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <strong>Error!</strong> Revise los campos obligatorios.<br><br>
@@ -16,7 +15,7 @@
             </div>
             @endif
 
-            <!-- Mostrar mensaje de éxito -->
+           
             @if(Session::has('success'))
             <div class="alert alert-info">
                 {{Session::get('success')}}
@@ -33,7 +32,7 @@
                             {{ csrf_field() }}
                             <input name="_method" type="hidden" value="PATCH">
                             
-                            <!-- Nombre y Descripción -->
+                           
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -47,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <!-- Precio y Cantidad en Stock -->
+                         
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -61,7 +60,7 @@
                                 </div>
                             </div>
 
-                            <!-- Tipo de Producto, Categoría, Marca y Modelo -->
+                           
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -88,7 +87,7 @@
                                 </div>
                             </div>
 
-                            <!-- Año de Fabricación -->
+                           
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
@@ -97,7 +96,7 @@
                                 </div>
                             </div>
 
-                            <!-- Botones -->
+                            
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" value="Actualizar" class="btn btn-success btn-block">

@@ -10,6 +10,9 @@ use App\Http\Controllers\Metodo_pagoController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\MantenimientoMaquinariaController;
+use App\Http\Controllers\ParametroController;
+use App\Http\Controllers\VentaController;
+
 
 /*
 |--------------------------------------------------------------------------  
@@ -38,6 +41,8 @@ Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto')
 Route::resource('/detalle_venta', Detalle_ventaController::class);
 Route::resource('/metodo_pago', Metodo_pagoController::class);
 Route::resource('/cliente', ClienteController::class);
-Route::resource('/producto', ProductoController::class); // Ruta para ProductoController
-Route::resource('/proveedor', ProveedorController::class); // Ruta para ProveedorController
-Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class); // Ruta para MantenimientoMaquinariaController
+Route::resource('/producto', ProductoController::class); 
+Route::resource('/proveedor', ProveedorController::class); 
+Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class); 
+Route::resource('/parametro', ParametroController::class); 
+Route::resource('/venta', VentaController::class); 
