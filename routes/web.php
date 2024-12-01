@@ -1,12 +1,15 @@
+
 <?php
 
 use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortafolioController;
 use App\Http\Controllers\ContactoController;
-use App\Http\Controllers\ProductoController; // Mantener esta línea
-use App\Http\Controllers\ProveedorController; // Mantener esta línea
-use App\Http\Controllers\MantenimientoMaquinariaController; // Mantener esta línea
+use App\Http\Controllers\Detalle_ventaController;
+use App\Http\Controllers\Metodo_pagoController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\MantenimientoMaquinariaController;
 
 /*
 |--------------------------------------------------------------------------  
@@ -31,8 +34,10 @@ Route::view('/acerca', 'acerca');
 Route::view('/contacto', 'contacto');
 Route::post('/contacto', [ContactoController::class, 'store'])->name('contacto');
 
+// Rutas de recursos
+Route::resource('/detalle_venta', Detalle_ventaController::class);
+Route::resource('/metodo_pago', Metodo_pagoController::class);
 Route::resource('/cliente', ClienteController::class);
 Route::resource('/producto', ProductoController::class); // Ruta para ProductoController
 Route::resource('/proveedor', ProveedorController::class); // Ruta para ProveedorController
 Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class); // Ruta para MantenimientoMaquinariaController
-
