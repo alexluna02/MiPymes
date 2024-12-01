@@ -10,10 +10,10 @@ class CreateVentasTable extends Migration
     {
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->string('cliente_id');
             $table->timestamp('fecha_venta');
             $table->decimal('total', 10, 2);
-            $table->foreignId('metodo_pago_id')->constrained('metodos_pago')->onDelete('cascade');
+            $table->string('metodo_pago_id');
             $table->string('estado');
             $table->date('fecha_entrega');
             $table->text('direccion_entrega');
