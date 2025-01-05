@@ -11,14 +11,17 @@ class CreateVentasTable extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->string('cliente_id');
-            $table->timestamp('fecha_venta');
+            $table->timestamp('fecha_venta')->useCurrent(); ;
             $table->decimal('total', 10, 2);
-            $table->string('metodo_pago_id');
+            $table->unsignedBigInteger('metodo_pago_id');
             $table->string('estado');
             $table->date('fecha_entrega');
             $table->text('direccion_entrega');
             $table->text('comentarios')->nullable();
             $table->timestamps();
+
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+            $table->foreign('metodo_pago_id')->references('id')->on('metodo_pago')->onDelete('cascade');
         });
     }
     public function down()

@@ -24,8 +24,8 @@ return new class extends Migration
             $table->timestamps(); // Campos created_at y updated_at
 
             // Definir las claves foráneas
-            $table->foreign('producto_id')->references('id')->on('producto')->onDelete('cascade');
-            $table->foreign('venta_id')->references('id')->on('venta')->onDelete('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->foreign('venta_id')->references('id')->on('ventas')->onDelete('cascade');
         });
     }
 

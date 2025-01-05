@@ -10,7 +10,8 @@ class Venta extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id',
+        'id', // Este no es obligatorio, pero puedes dejarlo si estás generando IDs personalizados
+        'cliente_id',
         'fecha_venta',
         'total',
         'metodo_pago_id',
@@ -20,13 +21,19 @@ class Venta extends Model
         'comentarios',
     ];
 
+
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->belongsTo(Cliente::class, 'cliente_id', 'id');
     }
+
 
     public function metodoPago()
     {
-        return $this->belongsTo(Metodo_pago::class);
+        return $this->belongsTo(Metodo_pago::class, 'metodo_pago_id', 'id');
+    }
+    public function detalles()
+    {
+        return $this->hasMany(Detalle_venta::class);
     }
 }
