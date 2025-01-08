@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Models\Cliente;
+use App\Models\Metodo_pago;
+use App\Models\Producto;
+use App\Models\Venta;
 use App\Models\Detalle_venta;
 
 class Detalle_ventaController extends Controller
@@ -21,7 +26,10 @@ class Detalle_ventaController extends Controller
      */
     public function create()
     {
-        return view('detalle_venta.create');
+        $productos = Producto::all(); // Asegúrate de que este modelo está definido
+        $ventas = Venta::all();
+        $productos = Producto::all();
+        return view('detalle_venta.create', compact('productos'));
     }
 
     /**

@@ -22,8 +22,8 @@ return new class extends Migration
             $table->decimal('impuesto',10,2);
             $table->decimal('total_linea',10,2);
             $table->timestamps();
-            $table->foreign('venta_id')->references('id')->on('venta')->onDelete('cascade');
-            $table->foreign('producto_id')->references('id')->on('producto')->onDelete('cascade');
+            $table->foreign('venta_id')->references('id')->on('ventas')->onDelete('cascade');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
         });
     }
 
