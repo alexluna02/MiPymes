@@ -33,6 +33,10 @@ Route::get('home', function() {
     return view('home', ['nombre' => 'Usuario invitado']);
 });
 
+Route::get('index', function() {
+    return view('index', ['nombre' => 'Usuario invitado']);
+});
+
 Route::get('/portafolio', PortafolioController::class);
 Route::view('/acerca', 'acerca');
 Route::view('/contacto', 'contacto');
