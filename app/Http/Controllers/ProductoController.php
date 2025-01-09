@@ -29,19 +29,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'descripcion' => 'required',
-            'precio' => 'required|numeric',
-            'cantidad_stock' => 'required|integer',
-            'tipo_producto' => 'required',
-            'categoria' => 'required',
-            'marca' => 'required',
-            'modelo' => 'required',
-            'año_fabricacion' => 'required|integer',
-        ]);
-
-        // Crear el nuevo producto
+        $this->validarProducto($request);
         Producto::create($request->all());
 
         return redirect()->route('producto.index')->with('success', 'Producto creado satisfactoriamente');
@@ -52,7 +40,7 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
-        $producto = Producto::find($id);
+        $producto = Producto::findOrFail($id);
         return view('producto.show', compact('producto'));
     }
 
@@ -61,7 +49,7 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        $producto = Producto::find($id);
+        $producto = Producto::findOrFail($id);
         return view('producto.edit', compact('producto'));
     }
 
@@ -70,35 +58,9 @@ class ProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'nombre' => 'required',
-            'descripcion' => 'required',
-            'precio' => 'required|numeric',
-            'cantidad_stock' => 'required|integer',
-            'tipo_producto' => 'required',
-            'categoria' => 'required',
-            'marca' => 'required',
-            'modelo' => 'required',
-            'año_fabricacion' => 'required|integer',
-        ]);
-
-        $producto = Producto::find($id);
-
-        if (!$producto) {
-            return redirect()->route('producto.index')->with('error', 'Producto no encontrado');
-        }
-
-        $producto->nombre = $request->input('nombre');
-        $producto->descripcion = $request->input('descripcion');
-        $producto->precio = $request->input('precio');
-        $producto->cantidad_stock = $request->input('cantidad_stock');
-        $producto->tipo_producto = $request->input('tipo_producto');
-        $producto->categoria = $request->input('categoria');
-        $producto->marca = $request->input('marca');
-        $producto->modelo = $request->input('modelo');
-        $producto->año_fabricacion = $request->input('año_fabricacion');
-
-        $producto->save();
+        $producto = Producto::findOrFail($id);
+        $this->validarProducto($request);
+        $producto->update($request->all());
 
         return redirect()->route('producto.index')->with('success', 'Producto actualizado satisfactoriamente');
     }
@@ -108,7 +70,41 @@ class ProductoController extends Controller
      */
     public function destroy(string $id)
     {
-        Producto::find($id)->delete();
+        $producto = Producto::findOrFail($id);
+        $producto->delete();
+
         return redirect()->route('producto.index')->with('success', 'Producto eliminado satisfactoriamente');
+    }
+
+    /**
+     * Filtrar productos por categoría.
+     */
+    public function filtrarPorCategoria($categoria)
+    {
+        $productos = Producto::where('tipo_producto', $categoria)->orderBy('nombre', 'ASC')->get();
+
+        if ($productos->isEmpty()) {
+            return response()->json(['message' => 'No hay productos en esta categoría.'], 404);
+        }
+
+        return response()->json($productos);
+    }
+
+    /**
+     * Validar los datos del producto.
+     */
+    private function validarProducto(Request $request)
+    {
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'precio' => 'required|numeric|min:0',
+            'cantidad_stock' => 'required|integer|min:0',
+            'tipo_producto' => 'required|string',
+            'categoria' => 'required|string',
+            'marca' => 'required|string|max:255',
+            'modelo' => 'required|string|max:255',
+            'año_fabricacion' => 'required|integer|min:1900|max:' . date('Y'),
+        ]);
     }
 }

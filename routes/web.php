@@ -53,3 +53,6 @@ Route::resource('/parametro', ParametroController::class);
 Route::resource('/venta', VentaController::class); 
 
 Route::resource('/activity_log', Activity_logController::class);
+
+// routes/web.php
+Route::get('/productos/categoria/{categoria}', [ProductoController::class, 'filtrarPorCategoria'])->name('productos.filtrar');

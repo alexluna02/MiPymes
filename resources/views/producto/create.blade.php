@@ -64,7 +64,14 @@
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
-                                        <input type="text" name="tipo_producto" id="tipo_producto" class="form-control input-sm" placeholder="Tipo de producto" value="{{ old('tipo_producto') }}">
+                                        <select name="tipo_producto" id="tipo_producto" class="form-control input-sm">
+                                            <option value="" disabled selected>Seleccione el tipo de producto</option>
+                                            <option value="Maquinaria" {{ old('tipo_producto') == 'Maquinaria' ? 'selected' : '' }}>Maquinaria</option>
+                                            <option value="Repuestos" {{ old('tipo_producto') == 'Repuestos' ? 'selected' : '' }}>Repuestos</option>
+                                            <option value="Aditivos" {{ old('tipo_producto') == 'Aditivos' ? 'selected' : '' }}>Aditivos</option>
+                                            <option value="Accesorios de sistemas de riego" {{ old('tipo_producto') == 'Accesorios de sistemas de riego' ? 'selected' : '' }}>Accesorios de sistemas de riego</option>
+                                            <option value="Varios" {{ old('tipo_producto') == 'Varios' ? 'selected' : '' }}>Varios</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -107,5 +114,4 @@
             </div>
         </div>
     </section>
-@endsection
-
+@endsection 

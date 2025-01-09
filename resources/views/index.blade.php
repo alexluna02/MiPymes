@@ -16,20 +16,38 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Clientes</a></li>
-                <li><a href="#">Productos</a></li>
-                <li><a href="#">Proveedores</a></li>
-                <li><a href="#">Mantenimiento de Maquinarias</a></li>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">La Empresa</a></li>
+                <li><a href="#">Servicios</a></li>
+                <li><a href="#">Catalogo</a></li>
+                <li><a href="#">Marcas</a></li>
+                <li><a href="#">Contactanos</a></li>
             </ul>
         </nav>
         
+        <div class="barra-busqueda">
+            <input type="text" placeholder="Buscar...">
+            <button type="submit">🔍</button>
+        </div>
+
         <div class="redes-sociales">
             <img src="{{ asset('Recursos/facebook.webp') }}" alt="Facebook" id="facebook">
             <img src="{{ asset('Recursos/tiktok.webp') }}" alt="TikTok" id="tiktok">
             <img src="{{ asset('Recursos/whatsap.jpg') }}" alt="WhatsApp" id="whatsapp">
         </div>
     </div>
-    
+    <div class="contenedor-principal">
+    <div class="categorias">
+        <h1>CATEGORIAS</h1>
+        <ul>
+            <li><a href="#" class="categoria" data-categoria="Maquinaria">🚜 Maquinaria</a></li>
+            <li><a href="#" class="categoria" data-categoria="Repuestos">🔧 Repuestos</a></li>
+            <li><a href="#" class="categoria" data-categoria="Aditivos">🧪 Aditivos</a></li>
+            <li><a href="#" class="categoria" data-categoria="Accesorios de sistemas de riego">💧 Accesorios sistema de riego</a></li>
+            <li><a href="#" class="categoria" data-categoria="Varios">📦 Varios</a></li>
+        </ul>
+    </div>
+
     <!-- Slider -->
     <div class="slider">
         <div class="slider-images">
@@ -39,26 +57,26 @@
             <img src="{{ asset('data1/images/foto4.jpg') }}" alt="Foto 4">
             <img src="{{ asset('data1/images/foto5.jpg') }}" alt="Foto 5">
         </div>
+
+        <div class="slider-message">
+                <h1>Compra y Venta de Maquinaria Agrícola</h1>
+                <p>Maq-Agro</p>
+            </div>
         <div class="slider-navigation">
             <a href="#" id="prev">&#10094;</a>
             <a href="#" id="next">&#10095;</a>
         </div>
     </div>
 
-    <!-- Categorías -->
-    <div class="categorias">
-        <h1>CATEGORIAS</h1>
-        <ul>
-            <li><a href="#">Maquinaria</a></li>
-            <li><a href="#">Repuestos</a></li>
-            <li><a href="#">Aditivos</a></li>
-            <li><a href="#">Accesorios sistema de riego</a></li>
-            <li><a href="#">Varios</a></li>
-        </ul>
+    </div>
+    <!-- Contenedor de productos -->
+    <div id="productos-container">
+        <!-- Aquí se mostrarán los productos filtrados -->
     </div>
 
-    <!-- Script para el Slider -->
+    <!-- Script -->
     <script>
+        // Slider
         let currentIndex = 0;
         const images = document.querySelectorAll('.slider-images img');
         const totalImages = images.length;
@@ -91,15 +109,47 @@
         }, 5000);
 
         showImage(currentIndex);
+
+        // Filtrar productos por categoría
+        document.querySelectorAll('.categoria').forEach(categoria => {
+            categoria.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const categoriaSeleccionada = this.getAttribute('data-categoria');
+                const productosContainer = document.getElementById('productos-container');
+
+                // Limpiar contenido anterior
+                productosContainer.innerHTML = '<p>Cargando productos...</p>';
+
+                // Petición AJAX
+                fetch(`${window.location.origin}/productos/categoria/${categoriaSeleccionada}`)
+                    .then(response => {
+                        console.log('Respuesta del servidor:', response);
+                        if (!response.ok) {
+                            throw new Error('Error en la respuesta del servidor');
+                        }
+                        return response.json();
+                    })
+                    .then(productos => {
+                        // Mostrar productos
+                        if (productos.length > 0) {
+                            productosContainer.innerHTML = productos.map(producto => `
+                                <div class="producto">
+                                    <h3>${producto.nombre}</h3>
+                                    <p>${producto.descripcion}</p>
+                                    <p><strong>Precio:</strong> $${producto.precio}</p>
+                                </div>
+                            `).join('');
+                        } else {
+                            productosContainer.innerHTML = '<p>No hay productos en esta categoría.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar los productos:', error);
+                        productosContainer.innerHTML = '<p>Hubo un problema al cargar los productos. Intenta de nuevo más tarde.</p>';
+                    });
+            });
+        });
     </script>
-
-
-<div class="barra-busqueda">
-    <input type="text" placeholder="Buscar...">
-    <nav class ="botonbuscar">
-    <button>Buscar </button>
-    </nav>
-</div>
-
 </body>
 </html>
