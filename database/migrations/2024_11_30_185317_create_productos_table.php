@@ -19,6 +19,7 @@ class CreateProductosTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('descripcion');  
+            $table->unsignedBigInteger('proveedor_id');
             $table->decimal('precio', 8, 2);  
             $table->integer('cantidad_stock');
             $table->string('tipo_producto');
@@ -27,6 +28,8 @@ class CreateProductosTable extends Migration
             $table->string('modelo');     
             $table->integer('año_fabricacion');  
             $table->timestamps();
+            $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('cascade');
+
         });
     }
     

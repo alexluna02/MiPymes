@@ -16,53 +16,64 @@
                 <th>Total</th>
                 <th>Fecha de Entrega</th>
                 <th>Estado</th>
+
+                <th>Total</th>
                 <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             @if($ventas->count())
-                @foreach($ventas as $venta)
-                <tr>
-                    <td>{{ $venta->cliente->nombre }}</td>
-                    <td>{{ $venta->fecha_venta }}</td>
-                    <td>${{ number_format($venta->total, 2) }}</td>
-                    <td>{{ $venta->fecha_entrega }}</td>
-                    <td>{{ $venta->estado }}</td>
-                    <td>
-                        <a href="{{ route('venta.edit', $venta->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                        <form action="{{ route('venta.destroy', $venta->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
-                        </form>
-                        <button class="btn btn-sm btn-primary detalles-btn" data-id="{{ $venta->id }}">Ver Detalles</button>
-                    </td>
-                </tr>
-                <tr id="detalles-venta-{{ $venta->id }}" class="detalles-venta" style="display: none;">
-                    <td colspan="6">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio Unitario</th>
-                                    <th>Subtotal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($venta->detalles as $detalle)
-                                <tr>
-                                    <td>{{ $detalle->producto->nombre }}</td>
-                                    <td>{{ $detalle->cantidad }}</td>
-                                    <td>${{ number_format($detalle->precio_unitario, 2) }}</td>
-                                    <td>${{ number_format($detalle->subtotal, 2) }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                @endforeach
+            @foreach($ventas as $venta)
+            <tr>
+                <td>{{ $venta->cliente->nombre }}</td>
+                <td>{{ $venta->fecha_venta }}</td>
+                <td>${{ number_format($venta->total, 2) }}</td>
+                <td>{{ $venta->fecha_entrega }}</td>
+                <td>{{ $venta->estado }}</td>
+
+                <td>{{$venta->total}}</td>
+                <td>
+                    <a href="{{ route('venta.edit', $venta->id) }}" class="btn btn-sm btn-warning">Editar</a>
+                    <form action="{{ route('venta.destroy', $venta->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                    <button class="btn btn-sm btn-primary detalles-btn" data-id="{{ $venta->id }}">Ver Detalles</button>
+                </td>
+            </tr>
+            <tr id="detalles-venta-{{ $venta->id }}" class="detalles-venta" style="display: none;">
+                <td colspan="6">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                                <th>Descuento</th>
+                                <th>Impuesto</th>
+                                <th>Subtotal</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($venta->detalles as $detalle)
+                            <tr>
+                                <td>{{ $detalle->producto->nombre }}</td>
+                                <td>{{ $detalle->cantidad }}</td>
+                                <td>${{ number_format($detalle->precio_unitario, 2) }}</td>
+                                <!--<td>${{ number_format($detalle->subtotal, 2) }}</td>-->
+                                <td>{{$detalle->descuento}}</td>
+                                <td>{{$detalle->impuesto}}</td>
+                                <td>{{$detalle->subtotal}}</td>
+                                <td>{{$detalle->total_linea}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            @endforeach
             @else
             <tr>
                 <td colspan="6">No hay registros.</td>

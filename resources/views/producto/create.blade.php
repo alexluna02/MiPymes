@@ -45,7 +45,15 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <label for="proveedor_id">Proveedor</label>
+                                <select name="proveedor_id" class="form-control" required>
+                                    <option value="">Seleccione un proveedor</option>
+                                    @foreach($proveedores as $proveedor)
+                                        <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">

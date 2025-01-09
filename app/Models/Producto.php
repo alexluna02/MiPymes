@@ -14,6 +14,7 @@ class Producto extends Model
     protected $fillable = [
         'nombre',
         'descripcion',  
+        'proveedor_id',
         'precio',
         'cantidad_stock',
         'tipo_producto',
@@ -22,5 +23,8 @@ class Producto extends Model
         'modelo',
         'año_fabricacion'
     ];
-
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'proveedor_id', 'id');
+    }
 }

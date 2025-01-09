@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Proveedor;
 
 class ProductoController extends Controller
 {
@@ -21,7 +22,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.create');
+        $proveedores = Proveedor::all();
+        return view('producto.create', compact('proveedores'));
     }
 
     /**
@@ -32,6 +34,7 @@ class ProductoController extends Controller
         $request->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
+            'proveedor_id' => 'required|numeric',
             'precio' => 'required|numeric',
             'cantidad_stock' => 'required|integer',
             'tipo_producto' => 'required',
@@ -52,7 +55,9 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
-        $producto = Producto::find($id);
+       // $producto = Producto::find($id);
+       // return view('producto.show', compact('producto'));
+        $producto = Producto::with('proveedor',)->findOrFail($id);
         return view('producto.show', compact('producto'));
     }
 
