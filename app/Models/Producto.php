@@ -14,13 +14,21 @@ class Producto extends Model
     protected $fillable = [
         'nombre',
         'descripcion',  
+        'proveedor_id',
+        'categoria_id',
         'precio',
         'cantidad_stock',
-        'tipo_producto',
-        'categoria',
         'marca',
         'modelo',
         'año_fabricacion'
     ];
+    public function proveedor()
+    {
+        return $this->belongsTo(Proveedor::class, 'proveedor_id', 'id');
+    }
 
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'categoria_id', 'id');
+    }
 }
