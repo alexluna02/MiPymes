@@ -27,7 +27,7 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Nuevo Producto</h3>
                 </div>
-                <div class="panel-body">                    
+                <div class="panel-body">
                     <div class="table-container">
                         <form method="POST" action="{{ route('producto.store') }}" role="form">
                             {{ csrf_field() }}
@@ -45,16 +45,49 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="proveedor_id">Proveedor</label>
-                                <select name="proveedor_id" class="form-control" required>
-                                    <option value="">Seleccione un proveedor</option>
-                                    @foreach($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
-                                    @endforeach
-                                </select>
+
+                            <label for="proveedor_id">Proveedor</label>
+                            <div class="row">
+
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <select name="proveedor_id" class="form-control" required>
+                                            <option value="">Seleccione un proveedor</option>
+                                            @foreach($proveedores as $proveedor)
+                                            <option value="{{ $proveedor->id }}">{{ $proveedor->nombre }}</option>
+                                            @endforeach
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="btn-group">
+                                        <a href="{{ route('proveedor.create') }}" class="btn btn-info">Añadir Nuevo Proveedor</a>
+                                    </div>
+                                </div>
                             </div>
-                            
+                            <label for="categoria_id">Categoria</label>
+                            <div class="row">
+
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+
+                                        <select name="categoria_id" class="form-control" required>
+                                            <option value="">Seleccione una categoria</option>
+                                            @foreach($categorias as $categoria)
+                                            <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="btn-group">
+                                        <a href="{{ route('categoria.create') }}?redirect_to={{ url()->current() }}" class="btn btn-primary">Crear nueva categoría</a>
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">
@@ -68,19 +101,8 @@
                                 </div>
                             </div>
 
-                            
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="tipo_producto" id="tipo_producto" class="form-control input-sm" placeholder="Tipo de producto" value="{{ old('tipo_producto') }}">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="categoria" id="categoria" class="form-control input-sm" placeholder="Categoría" value="{{ old('categoria') }}">
-                                    </div>
-                                </div>
-                            </div>
+
+                           
 
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -107,7 +129,7 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <input type="submit" value="Guardar" class="btn btn-success btn-block">
                                     <a href="{{ route('producto.index') }}" class="btn btn-info btn-block">Atrás</a>
-                                </div>    
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -115,5 +137,4 @@
             </div>
         </div>
     </section>
-@endsection
-
+    @endsection

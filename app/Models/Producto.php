@@ -15,10 +15,9 @@ class Producto extends Model
         'nombre',
         'descripcion',  
         'proveedor_id',
+        'categoria_id',
         'precio',
         'cantidad_stock',
-        'tipo_producto',
-        'categoria',
         'marca',
         'modelo',
         'año_fabricacion'
@@ -26,5 +25,10 @@ class Producto extends Model
     public function proveedor()
     {
         return $this->belongsTo(Proveedor::class, 'proveedor_id', 'id');
+    }
+
+    public function categoria()
+    {
+        return $this->belongsTo(Categoria::class, 'categoria_id', 'id');
     }
 }

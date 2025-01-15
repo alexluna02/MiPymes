@@ -12,6 +12,8 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\MantenimientoMaquinariaController;
 use App\Http\Controllers\ParametroController;
 use App\Http\Controllers\VentaController;
+
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Activity_logController;
 
 
@@ -47,5 +49,7 @@ Route::resource('/proveedor', ProveedorController::class);
 Route::resource('/mantenimientomaquinaria', MantenimientoMaquinariaController::class); 
 Route::resource('/parametro', ParametroController::class); 
 Route::resource('/venta', VentaController::class); 
+
+Route::resource('/categoria', CategoriaController::class); 
 
 Route::resource('/activity_log', Activity_logController::class);

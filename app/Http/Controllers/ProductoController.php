@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Proveedor;
+use App\Models\Categoria;
 
 class ProductoController extends Controller
 {
@@ -23,7 +24,8 @@ class ProductoController extends Controller
     public function create()
     {
         $proveedores = Proveedor::all();
-        return view('producto.create', compact('proveedores'));
+        $categorias = Categoria::all();
+        return view('producto.create', compact('proveedores','categorias'));
     }
 
     /**
@@ -35,10 +37,9 @@ class ProductoController extends Controller
             'nombre' => 'required',
             'descripcion' => 'required',
             'proveedor_id' => 'required|numeric',
+            'categoria_id' => 'required|numeric',
             'precio' => 'required|numeric',
             'cantidad_stock' => 'required|integer',
-            'tipo_producto' => 'required',
-            'categoria' => 'required',
             'marca' => 'required',
             'modelo' => 'required',
             'año_fabricacion' => 'required|integer',
@@ -78,10 +79,10 @@ class ProductoController extends Controller
         $request->validate([
             'nombre' => 'required',
             'descripcion' => 'required',
+            'proveedor_id' => 'required|numeric',
+            'categoria_id' => 'required|numeric',
             'precio' => 'required|numeric',
             'cantidad_stock' => 'required|integer',
-            'tipo_producto' => 'required',
-            'categoria' => 'required',
             'marca' => 'required',
             'modelo' => 'required',
             'año_fabricacion' => 'required|integer',
@@ -95,10 +96,11 @@ class ProductoController extends Controller
 
         $producto->nombre = $request->input('nombre');
         $producto->descripcion = $request->input('descripcion');
+
+        $producto->proveedor_id = $request->input('proveedor_id');
+        $producto->categoria_id = $request->input('categoria_id');
         $producto->precio = $request->input('precio');
         $producto->cantidad_stock = $request->input('cantidad_stock');
-        $producto->tipo_producto = $request->input('tipo_producto');
-        $producto->categoria = $request->input('categoria');
         $producto->marca = $request->input('marca');
         $producto->modelo = $request->input('modelo');
         $producto->año_fabricacion = $request->input('año_fabricacion');

@@ -61,19 +61,7 @@
                             </div>
 
                            
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="tipo_producto" id="tipo_producto" class="form-control input-sm" value="{{ $producto->tipo_producto }}">
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" name="categoria" id="categoria" class="form-control input-sm" value="{{ $producto->categoria }}">
-                                    </div>
-                                </div>
-                            </div>
-
+                           
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
                                     <div class="form-group">

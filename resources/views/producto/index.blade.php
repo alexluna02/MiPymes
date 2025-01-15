@@ -20,7 +20,6 @@
                 <th>Precio</th>
                 <th>Proveedor</th>
                 <th>Cantidad en Stock</th>
-                <th>Tipo de producto</th>
                 <th>Categoría</th>
                 <th>Marca</th>
                 <th>Modelo</th>
@@ -33,12 +32,11 @@
                   @foreach($productos as $producto)  
                     <tr>
                       <td>{{$producto->nombre}}</td>
-                      <td>{{$producto->descripcion}}</td>
+                      <td> <textarea name="descripcion" class="form-control input-sm" placeholder="Descripción del producto"readonly="true">{{$producto->descripcion}}</textarea></td>
                       <td>${{$producto->precio}}</td>
                       <td>{{ $producto->proveedor->nombre }}</td>
                       <td>{{$producto->cantidad_stock}}</td>
-                      <td>{{$producto->tipo_producto}}</td>
-                      <td>{{$producto->categoria}}</td>
+                      <td>{{$producto->categoria->nombre}}</td>
                       <td>{{$producto->marca}}</td>
                       <td>{{$producto->modelo}}</td>
                       <td>{{$producto->año_fabricacion}}</td>
