@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use App\Models\Proveedor;
 
 class ProductoController extends Controller
 {
@@ -12,7 +13,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::orderBy('id', 'DESC')->paginate(3);
+        $productos = Producto::orderBy('id', 'DESC')->paginate(config('pagination.productos', 10));
         return view('producto.index', compact('productos'));
     }
 
@@ -21,7 +22,8 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('producto.create');
+        $proveedores = Proveedor::all();
+        return view('producto.create', compact('proveedores'));
     }
 
     /**
@@ -30,7 +32,9 @@ class ProductoController extends Controller
     public function store(Request $request)
     {
         $this->validarProducto($request);
-        Producto::create($request->all());
+
+        // Crear el nuevo producto con datos validados
+        Producto::create($request->validated());
 
         return redirect()->route('producto.index')->with('success', 'Producto creado satisfactoriamente');
     }
@@ -40,7 +44,12 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
-        $producto = Producto::findOrFail($id);
+        $producto = Producto::with('proveedor')->findOrFail($id);
+
+        if (!$producto->proveedor) {
+            return redirect()->route('producto.index')->with('error', 'El producto no tiene un proveedor asociado.');
+        }
+
         return view('producto.show', compact('producto'));
     }
 
@@ -50,7 +59,8 @@ class ProductoController extends Controller
     public function edit(string $id)
     {
         $producto = Producto::findOrFail($id);
-        return view('producto.edit', compact('producto'));
+        $proveedores = Proveedor::all();
+        return view('producto.edit', compact('producto', 'proveedores'));
     }
 
     /**
@@ -60,7 +70,8 @@ class ProductoController extends Controller
     {
         $producto = Producto::findOrFail($id);
         $this->validarProducto($request);
-        $producto->update($request->all());
+
+        $producto->update($request->validated());
 
         return redirect()->route('producto.index')->with('success', 'Producto actualizado satisfactoriamente');
     }
@@ -105,6 +116,13 @@ class ProductoController extends Controller
             'marca' => 'required|string|max:255',
             'modelo' => 'required|string|max:255',
             'año_fabricacion' => 'required|integer|min:1900|max:' . date('Y'),
+            'proveedor_id' => 'required|exists:proveedores,id',
+        ], [
+            'nombre.required' => 'El nombre del producto es obligatorio.',
+            'descripcion.required' => 'La descripción es obligatoria.',
+            'precio.required' => 'El precio es obligatorio.',
+            'cantidad_stock.required' => 'La cantidad en stock es obligatoria.',
+            'proveedor_id.exists' => 'El proveedor seleccionado no es válido.',
         ]);
     }
 }

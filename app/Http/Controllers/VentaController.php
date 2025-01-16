@@ -46,42 +46,40 @@ class VentaController extends Controller
         ]);
 
         // Iniciar una transacción de base de datos
-        
 
-        
-            // Crear la venta
-            $venta = Venta::create($request->only([
-                'cliente_id',
-                'total',
-                'metodo_pago_id',
-                'estado',
-                'fecha_entrega',
-                'direccion_entrega',
-                'comentarios'
-            ]));
 
-            // Guardar los detalles de la venta
-            foreach ($request->input('detalles') as $detalle) {
-                Detalle_venta::create([
-                    'venta_id' => $venta->id,
-                    'producto_id' => $detalle['producto_id'],
-                    'cantidad' => $detalle['cantidad'],
-                    'precio_unitario' => $detalle['precio_unitario'],
-                    'subtotal' => $detalle['subtotal'],
-                    //'descuento' => $detalle['descuento'],
-                    //'impuesto' => $detalle['subtotal'],
-                    'descuento' => 50,
-                    'impuesto' => 0.15,
-                    'total_linea' => $detalle['subtotal']* (50/100)* 0.15,
-                ]);
-            }
 
-            // Confirmar la transacción
-            Venta::create($request->all());
-        
+        // Crear la venta
+        $venta = Venta::create($request->only([
+            'cliente_id',
+            'total',
+            'metodo_pago_id',
+            'estado',
+            'fecha_entrega',
+            'direccion_entrega',
+            'comentarios'
+        ]));
+
+        // Guardar los detalles de la venta
+        foreach ($request->input('detalles') as $detalle) {
+            Detalle_venta::create([
+                'venta_id' => $venta->id,
+                'producto_id' => $detalle['producto_id'],
+                'cantidad' => $detalle['cantidad'],
+                'precio_unitario' => $detalle['precio_unitario'],
+                'subtotal' => $detalle['subtotal'],
+                'descuento' => $detalle['descuento'],
+                //'impuesto' => $detalle['subtotal'],
+                //'descuento' => 50,
+                'impuesto' => 0.15,
+                'total_linea' => $detalle['subtotal']+($detalle['subtotal'] * 0.15),
+            ]);
+        }
+
+        // Confirmar la transacción
+        //Venta::create($request->all());
+
         return redirect()->route('venta.index')->with('success', 'Venta registrada con éxito');
-           
-        
     }
 
 

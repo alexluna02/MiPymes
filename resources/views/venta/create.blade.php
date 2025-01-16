@@ -21,6 +21,7 @@
                                 <label for="total">Total</label>
                                 <input type="number" name="total" class="form-control" id="total" readonly>
                             </div>
+                            
                             <div class="form-group">
                                 <label for="metodo_pago_id">Método de Pago</label>
                                 <select name="metodo_pago_id" class="form-control" required>
@@ -56,6 +57,7 @@
                                             <th>Producto</th>
                                             <th>Cantidad</th>
                                             <th>Precio Unitario</th>
+                                            <th>Descuento</th>
                                             <th>Subtotal</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -106,8 +108,12 @@
                             <input type="number" name="detalles[${contador}][precio_unitario]" class="form-control precio-unitario" readonly>
                         </td>
                         <td>
+                            <input type="number" name="detalles[${contador}][descuento]" class="form-control descuento">
+                        </td>
+                        <td>
                             <input type="number" name="detalles[${contador}][subtotal]" class="form-control subtotal" readonly>
                         </td>
+                        
                         <td>
                             <button type="button" class="btn btn-danger eliminar-fila" data-id="${contador}">Eliminar</button>
                         </td>
@@ -124,11 +130,12 @@
             });
 
             // Evento para actualizar subtotal y total al cambiar cantidad o producto
-            $(document).on('change', '.cantidad, select[name^="detalles"]', function () {
+            $(document).on('change', '.cantidad,.descuento, select[name^="detalles"]', function () {
                 const fila = $(this).closest('tr');
                 const precio = parseFloat(fila.find('select option:selected').data('precio')) || 0;
                 const cantidad = parseInt(fila.find('.cantidad').val()) || 0;
-                const subtotal = precio * cantidad;
+                const descuento = parseInt(fila.find('.descuento').val()) || 0;
+                const subtotal = precio * cantidad*(1-descuento/100);
                 fila.find('.precio-unitario').val(precio.toFixed(2));
                 fila.find('.subtotal').val(subtotal.toFixed(2));
                 actualizarTotal();

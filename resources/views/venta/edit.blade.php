@@ -33,7 +33,7 @@
                                     <option value="">Seleccione un método de pago</option>
                                     @foreach($metodosPago as $metodo)
                                         <option value="{{ $metodo->id }}" {{ $venta->metodo_pago_id == $metodo->id ? 'selected' : '' }}>
-                                            {{ $metodo->nombre }}
+                                            {{ $metodo->metodo }}
                                         </option>
                                     @endforeach
                                 </select>

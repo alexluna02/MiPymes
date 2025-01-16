@@ -15,9 +15,7 @@
 <body>
     <header class="u-clearfix u-header u-header" id="sec-8087">
         <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-            <a href="#" class="u-image u-logo u-image-1">
-                <img src="https://scontent.fuio28-1.fna.fbcdn.net/v/t39.30808-6/315893906_498656032282846_1676272559474696913_n.jpg?stp=dst-jpg_s960x960_tt6&_nc_cat=102&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=swGO_Nm4wFEQ7kNvgGviP6-&_nc_zt=23&_nc_ht=scontent.fuio28-1.fna&_nc_gid=AjGfYMtOB4IhKRECJkv1Pgb&oh=00_AYDipE_vn7kNqilGodqynovqq_xUL01xjBa_YtCulqNdHw&oe=677D0569" class="u-logo-image u-logo-image-1">
-            </a>
+            
             <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1" data-responsive-from="MD">
 
                 <div class="u-custom-menu u-nav-container" wfd-invisible="true">
