@@ -13,7 +13,10 @@
                                 <thead>
                                     <th>ID Usuario</th>
                                     <th>Acción</th>
-                                    <th>Detalles</th>
+                                    <th>Model</th>
+                                    <th>Model ID</th>
+                                    <th>Valor Antiguo</th>
+                                    <th>Valor Nuevo</th>
                                     <th>Fecha de Creación</th>
                                 </thead>
                                 <tbody>
@@ -22,7 +25,10 @@
                                             <tr>
                                                 <td>{{ $log->user_id }}</td>
                                                 <td>{{ $log->action }}</td>
-                                                <td>{{ $log->details }}</td>
+                                                <td>{{ $log->model }}</td>
+                                                <td>{{ $log->model_id }}</td>
+                                                <td class="text-container">{{ $log->old_value }}</td>
+                                                <td class="text-container">{{ $log->new_value }}</td>
                                                 <td>{{ $log->created_at }}</td>
                                             </tr>
                                         @endforeach

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Metodo_pago;
+use App\Events\ModelUpdated;
 
 class Metodo_pagoController extends Controller
 {
@@ -12,8 +13,8 @@ class Metodo_pagoController extends Controller
      */
     public function index()
     {
-        $metodos=Metodo_pago::orderBy('id','DESC')->paginate(3);
-        return view('metodo_pago.index',compact('metodos'));
+        $metodos = Metodo_pago::orderBy('id', 'DESC')->paginate(3);
+        return view('metodo_pago.index', compact('metodos'));
     }
 
     /**
@@ -29,9 +30,9 @@ class Metodo_pagoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([ 'metodo'=>'required', 'descripcion']);
+        $request->validate(['metodo' => 'required', 'descripcion']);
         Metodo_pago::create($request->all());
-        return redirect()->route('metodo_pago.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('metodo_pago.index')->with('success', 'Registro creado satisfactoriamente');
     }
 
     /**
@@ -39,8 +40,8 @@ class Metodo_pagoController extends Controller
      */
     public function show(string $id)
     {
-        $metodos=Metodo_pago::find($id);
-        return view('metodo_pago.show',compact('metodos'));
+        $metodos = Metodo_pago::find($id);
+        return view('metodo_pago.show', compact('metodos'));
     }
 
     /**
@@ -48,8 +49,8 @@ class Metodo_pagoController extends Controller
      */
     public function edit(string $id)
     {
-        $metodo=Metodo_pago::find($id);
-        return view('metodo_pago.edit',compact('metodo'));
+        $metodo = Metodo_pago::find($id);
+        return view('metodo_pago.edit', compact('metodo'));
     }
 
     /**
@@ -57,17 +58,31 @@ class Metodo_pagoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([ 'metodo'=>'required', 'descripcion']);
+        $request->validate([
+            'metodo' => 'required',
+            'descripcion' => 'required',
+        ]);
 
-        $metodo=Metodo_pago::findorfail($id);
+        $metodo = Metodo_pago::findOrFail($id);
 
-        $metodo->metodo=request()->input('metodo');
-        $metodo->descripcion=request()->input('descripcion');
+        if (!$metodo) {
+            return redirect()->route('metodo_pago.index')->with('error', 'Método de pago no encontrado');
+        }
+
+        $old_value = $metodo->toArray();
+
+        $metodo->metodo = $request->input('metodo');
+        $metodo->descripcion = $request->input('descripcion');
 
         $metodo->save();
 
-        return redirect()->route('metodo_pago.index')->with('success', 'Libro actualizado correctamente');
+        $new_value = $metodo->toArray();
+
+        event(new ModelUpdated($metodo, $old_value, $new_value));
+
+        return redirect()->route('metodo_pago.index')->with('success', 'Método de pago actualizado correctamente');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -75,6 +90,6 @@ class Metodo_pagoController extends Controller
     public function destroy(string $id)
     {
         Metodo_pago::find($id)->delete();
-        return redirect()->route('metodo_pago.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('metodo_pago.index')->with('success', 'Registro eliminado satisfactoriamente');
     }
 }

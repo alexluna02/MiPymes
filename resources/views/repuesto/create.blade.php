@@ -69,9 +69,19 @@
 
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <input type="text" name="categoria_id" id="categoria_id"
-                                                class="form-control input-sm" placeholder="Categoría"
-                                                value="{{ old('categoria_id') }}">
+    
+                                            <select name="categoria_id" class="form-control input-sm" required>
+                                                <option value="">Sleeccione una categoria</option>
+                                                @foreach($categorias as $categoria)
+                                                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-6 col-md-6">
+                                        <div class="btn-group">
+                                            <a href="{{ route('categoria.create') }}?redirect_to={{ url()->current() }}" class="btn btn-primary">Crear nueva categoría</a>
+    
                                         </div>
                                     </div>
                                 </div>

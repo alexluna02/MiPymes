@@ -9,6 +9,7 @@ use App\Models\Metodo_pago;
 use App\Models\Producto;
 use App\Models\Venta;
 use App\Models\Detalle_venta;
+use App\Events\ModelUpdated;
 
 class Detalle_ventaController extends Controller
 {
@@ -104,7 +105,13 @@ class Detalle_ventaController extends Controller
             'impuesto' => 'required|numeric'
         ]);
 
-        $detalle=Detalle_venta::findorfail($id);
+        $detalle = Detalle_venta::findOrFail($id);
+
+        if (!$detalle) {
+            return redirect()->route('detalle_venta.index')->with('error', 'Detalle de venta no encontrado');
+        }
+
+        $old_value = $detalle->toArray();
 
         $cantidad = $request->input('cantidad');
         $precio_unitario = $request->input('precio_unitario');
@@ -118,20 +125,24 @@ class Detalle_ventaController extends Controller
 
         $total_linea = ($subtotal - $descuentototal) + $impuestototal;
 
-
-        $detalle->venta_id=request()->input('venta_id');
-        $detalle->producto_id=request()->input('producto_id');
-        $detalle->cantidad=$cantidad;
-        $detalle->precio_unitario=$precio_unitario;;
-        $detalle->subtotal=$subtotal;
-        $detalle->descuento=$descuento;
-        $detalle->impuesto=$impuesto;
-        $detalle->total_linea=$total_linea;
+        $detalle->venta_id = $request->input('venta_id');
+        $detalle->producto_id = $request->input('producto_id');
+        $detalle->cantidad = $cantidad;
+        $detalle->precio_unitario = $precio_unitario;
+        $detalle->subtotal = $subtotal;
+        $detalle->descuento = $descuento;
+        $detalle->impuesto = $impuesto;
+        $detalle->total_linea = $total_linea;
 
         $detalle->save();
 
-        return redirect()->route('detalle_venta.index')->with('success', 'Libro actualizado correctamente');
+        $new_value = $detalle->toArray();
+
+        event(new ModelUpdated($detalle, $old_value, $new_value));
+
+        return redirect()->route('detalle_venta.index')->with('success', 'Detalle de venta actualizado correctamente');
     }
+
 
     /**
      * Remove the specified resource from storage.

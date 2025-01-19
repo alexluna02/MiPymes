@@ -7,12 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Events\ModelDeleted;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
 
+    use HasFactory, Notifiable;
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
     /**
      * The attributes that are mass assignable.
      *
@@ -45,5 +48,36 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function Role($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+
+    public static function hasRoleById($userId, $roleName)
+    {
+        $user = self::find($userId);
+        if ($user) {
+            return $user->roles()->where('name', $roleName)->exists();
+        }
+        return false;
+    }
+
+    public function assignRole($role)
+    {
+        $role = Role::where('name', $role)->firstOrFail();
+        $this->roles()->attach($role);
+    }
+
+    public function removeRole($role)
+    {
+        $role = Role::where('name', $role)->firstOrFail();
+        $this->roles()->detach($role);
     }
 }
