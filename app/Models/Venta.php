@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\ModelCreated;
+use App\Events\ModelDeleted;
 
 class Venta extends Model
 {
     use HasFactory;
-
+    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
     protected $fillable = [
         'id', // Este no es obligatorio, pero puedes dejarlo si estás generando IDs personalizados
         'cliente_id',

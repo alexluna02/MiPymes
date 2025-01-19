@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\Categoria;
+use App\Events\ModelUpdated;
+
+use Illuminate\Support\Facades\DB;
+
+use Illuminate\Support\Facades\Auth;
 
 class ProductoController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -23,9 +29,10 @@ class ProductoController extends Controller
      */
     public function create()
     {
+
         $proveedores = Proveedor::all();
         $categorias = Categoria::all();
-        return view('producto.create', compact('proveedores','categorias'));
+        return view('producto.create', compact('proveedores', 'categorias'));
     }
 
     /**
@@ -56,8 +63,8 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
-       // $producto = Producto::find($id);
-       // return view('producto.show', compact('producto'));
+        // $producto = Producto::find($id);
+        // return view('producto.show', compact('producto'));
         $producto = Producto::with('proveedor',)->findOrFail($id);
         return view('producto.show', compact('producto'));
     }
@@ -94,9 +101,10 @@ class ProductoController extends Controller
             return redirect()->route('producto.index')->with('error', 'Producto no encontrado');
         }
 
+        $old_value = $producto->toArray();
+
         $producto->nombre = $request->input('nombre');
         $producto->descripcion = $request->input('descripcion');
-
         $producto->proveedor_id = $request->input('proveedor_id');
         $producto->categoria_id = $request->input('categoria_id');
         $producto->precio = $request->input('precio');
@@ -107,8 +115,13 @@ class ProductoController extends Controller
 
         $producto->save();
 
+        $new_value = $producto->toArray();
+
+        event(new ModelUpdated($producto, $old_value, $new_value));
+
         return redirect()->route('producto.index')->with('success', 'Producto actualizado satisfactoriamente');
     }
+
 
     /**
      * Remove the specified resource from storage.

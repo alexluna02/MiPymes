@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Events\ModelUpdated;
 
 class CategoriaController extends Controller
 {
@@ -80,11 +81,19 @@ class CategoriaController extends Controller
         ]);
 
         $categoria = Categoria::find($id);
+
         if (!$categoria) {
             return redirect()->route('categoria.index')->with('error', 'Categoría no encontrada');
         }
 
+        $old_value = $categoria->toArray();
+
         $categoria->update($request->all());
+
+        $new_value = $categoria->toArray();
+
+        event(new ModelUpdated($categoria, $old_value, $new_value));
+
         return redirect()->route('categoria.index')->with('success', 'Categoría actualizada satisfactoriamente');
     }
 

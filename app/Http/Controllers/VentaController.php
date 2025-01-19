@@ -8,7 +8,7 @@ use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Metodo_pago;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Events\ModelUpdated;
 
 class VentaController extends Controller
 {
@@ -72,7 +72,7 @@ class VentaController extends Controller
                 //'impuesto' => $detalle['subtotal'],
                 //'descuento' => 50,
                 'impuesto' => 0.15,
-                'total_linea' => $detalle['subtotal']+($detalle['subtotal'] * 0.15),
+                'total_linea' => $detalle['subtotal'] + ($detalle['subtotal'] * 0.15),
             ]);
         }
 
@@ -110,7 +110,11 @@ class VentaController extends Controller
         ]);
 
         $venta = Venta::findOrFail($id);
+        $old_value = $venta->toArray();
         $venta->update($request->all());
+        $new_value = $venta->toArray();
+
+        event(new ModelUpdated($venta, $old_value, $new_value));
 
         return redirect()->route('venta.index')->with('success', 'Venta actualizada con éxito');
     }

@@ -36,7 +36,7 @@
                                                 <td>{{ $repuesto->descripcion }}</td>
                                                 <td>${{ $repuesto->precio }}</td>
                                                 <td>{{ $repuesto->cantidad_stock }}</td>
-                                                <td>{{ $repuesto->categoria }}</td>
+                                                <td>{{ $repuesto->categoria->nombre}}</td>
                                                 <td>{{ $repuesto->marca }}</td>
                                                 <td>{{ $repuesto->modelo }}</td>
                                                 <td>{{ $repuesto->año_fabricacion }}</td>

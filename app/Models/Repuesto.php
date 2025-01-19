@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\ModelCreated;
+use App\Events\ModelDeleted;
 
 class Repuesto extends Model
 {
     use HasFactory;
-
+    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
     protected $table = 'repuestos';
 
     protected $fillable = [
@@ -23,11 +25,11 @@ class Repuesto extends Model
     ];
 
     // Relación con la tabla de categorías (asumiendo que tienes un modelo Categoria)
-   /* public function categoria()
+   public function categoria()
     {
         return $this->belongsTo(Categoria::class);
     }
-*/
+
     // Relación con la tabla de productos a través de la tabla intermedia
     public function productos()
     {

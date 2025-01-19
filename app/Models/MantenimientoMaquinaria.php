@@ -2,8 +2,9 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use App\Events\ModelCreated;
 use Illuminate\Database\Eloquent\Model;
+use App\Events\ModelDeleted;
 
 class MantenimientoMaquinaria extends Model
 {
@@ -11,7 +12,7 @@ class MantenimientoMaquinaria extends Model
 
     // Nombre de la tabla (opcional si sigue la convención)
     protected $table = 'mantenimiento_maquinaria';
-
+    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
     // Campos asignables
     protected $fillable = [
         'producto_id',

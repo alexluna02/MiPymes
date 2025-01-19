@@ -61,11 +61,15 @@
                                 </div>
 
                                 <div class="row">
-                                    
                                     <div class="col-xs-6 col-sm-6 col-md-6">
                                         <div class="form-group">
-                                            <input type="text" name="categoria_id" id="categoria_id"
-                                                class="form-control input-sm" value="{{ $repuesto->categoria_id }}">
+    
+                                            <select name="categoria_id" class="form-control input-sm" required>
+                                                {{ $repuesto->categoria->nombre }}
+                                                @foreach($categorias as $categoria)
+                                                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

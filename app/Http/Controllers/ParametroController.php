@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Parametro;
 use Illuminate\Http\Request;
+use App\Events\ModelUpdated;
 
 class ParametroController extends Controller
 {
@@ -87,10 +88,22 @@ class ParametroController extends Controller
         ]);
 
         $parametro = Parametro::find($id);
+
+        if (!$parametro) {
+            return redirect()->route('parametro.index')->with('error', 'Parámetro no encontrado');
+        }
+
+        $old_value = $parametro->toArray();
+
         $parametro->update($request->all());
+
+        $new_value = $parametro->toArray();
+
+        event(new ModelUpdated($parametro, $old_value, $new_value));
 
         return redirect()->route('parametro.index')->with('success', 'Parámetro actualizado satisfactoriamente.');
     }
+
 
     /**
      * Remove the specified resource from storage.

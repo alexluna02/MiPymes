@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cliente;
+use App\Events\ModelUpdated;
+
 class ClienteController extends Controller
 {
     /**
@@ -11,8 +13,8 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes=Cliente::orderBy('id','DESC')->paginate(3);
-        return view('cliente.index',compact('clientes')); 
+        $clientes = Cliente::orderBy('id', 'DESC')->paginate(3);
+        return view('cliente.index', compact('clientes'));
     }
 
     /**
@@ -27,21 +29,21 @@ class ClienteController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'id' => 'required',
-        'nombre' => 'required',
-        'direccion' => 'required',
-        'telefono' => 'required',
-        'email' => 'required',
-        'fecha_registro' => 'required'
-    ]);
+    {
+        $request->validate([
+            'id' => 'required',
+            'nombre' => 'required',
+            'direccion' => 'required',
+            'telefono' => 'required',
+            'email' => 'required',
+            'fecha_registro' => 'required'
+        ]);
 
-    // Crear el nuevo cliente
-    Cliente::create($request->all());
+        // Crear el nuevo cliente
+        Cliente::create($request->all());
 
-    return redirect()->route('cliente.index')->with('success', 'Registro creado satisfactoriamente');
-}
+        return redirect()->route('cliente.index')->with('success', 'Registro creado satisfactoriamente');
+    }
 
 
     /**
@@ -49,8 +51,8 @@ class ClienteController extends Controller
      */
     public function show(string $id)
     {
-        $clientes=Cliente::find($id);
-        return  view('cliente.show',compact('clientes'));
+        $clientes = Cliente::find($id);
+        return  view('cliente.show', compact('clientes'));
     }
 
     /**
@@ -58,8 +60,8 @@ class ClienteController extends Controller
      */
     public function edit(string $id)
     {
-        $cliente=cliente::find($id);
-        return view('cliente.edit',compact('cliente'));
+        $cliente = cliente::find($id);
+        return view('cliente.edit', compact('cliente'));
     }
 
     /**
@@ -75,26 +77,31 @@ class ClienteController extends Controller
             'email' => 'required',
             'fecha_registro' => 'required'
         ]);
-    
- 
+
         $cliente = Cliente::find($id);
 
         if (!$cliente) {
             return redirect()->route('cliente.index')->with('error', 'Cliente no encontrado');
         }
-    
+
+        $old_value = $cliente->toArray();
+
         $cliente->id = $request->input('id');
         $cliente->nombre = $request->input('nombre');
         $cliente->direccion = $request->input('direccion');
         $cliente->telefono = $request->input('telefono');
         $cliente->email = $request->input('email');
         $cliente->fecha_registro = $request->input('fecha_registro');
-    
 
         $cliente->save();
-    
+
+        $new_value = $cliente->toArray();
+
+        event(new ModelUpdated($cliente, $old_value, $new_value));
+
         return redirect()->route('cliente.index')->with('success', 'Cliente actualizado satisfactoriamente');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -102,7 +109,6 @@ class ClienteController extends Controller
     public function destroy(string $id)
     {
         Cliente::find($id)->delete();
-        return redirect()->route('cliente.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('cliente.index')->with('success', 'Registro eliminado satisfactoriamente');
     }
-    
 }
