@@ -9,6 +9,18 @@
     <link rel="stylesheet" href="{{ asset('CSS/index.css') }}">
 </head>
 <body>
+    <div class="row">
+        <div class="btn-group">
+          <form method="GET" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-warning btn-xs">Logout</button>
+          </form>
+        </div>
+    </div>
+    <div>@auth
+        Sesion: {{Auth::user()->name}}
+        Sesion: {{Auth::id()}}
+    @endauth</div>
     <!-- Barra Principal -->
     <div class="barra-principal">
         <div class="logo-container">
