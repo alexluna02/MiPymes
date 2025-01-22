@@ -9,31 +9,35 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//capp.nicepage.com/5af5658f5419992d134c0074488a3ffef48fba0f/nicepage.css" media="screen">
 
+    <link rel="stylesheet" href="{{ asset('CSS/index.css') }}">
+
 </head>
 
 
 <body>
     <header class="u-clearfix u-header u-header" id="sec-8087">
-        <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-            
-            <nav class="u-menu u-menu-one-level u-offcanvas u-menu-1" data-responsive-from="MD">
-
-                <div class="u-custom-menu u-nav-container" wfd-invisible="true">
-                    <ul class="u-nav u-spacing-30 u-unstyled u-nav-1">
-                        <li class="u-nav-item"><a class="u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="/home" style="padding: 10px 0px;">Home</a>
-                        </li>
-                        <li class="u-nav-item"><a class="u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="/cliente" style="padding: 10px 0px;">Clientes</a>
-                        </li>
-                        <li class="u-nav-item"><a class="u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90" href="/producto" style="padding: 10px 0px;">Productos </a>
-                        </li>
-                        <li class="u-nav-item"><a class="u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90 active" href="/proveedor" style="padding: 10px 0px;">Proveedores</a>
-                        </li>
-                        <li class="u-nav-item"><a class="u-border-2 u-border-active-palette-3-base u-border-hover-palette-3-base u-border-no-left u-border-no-right u-border-no-top u-button-style u-nav-link u-text-active-grey-90 u-text-grey-90 u-text-hover-grey-90 active" href="/mantenimientomaquinaria" style="padding: 10px 0px;">Mantenimiento de Maquinarias</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+    <div class="barra-principal">
+        <div class="logo-container">
+            <img src="{{ asset('Recursos/maqagro.jpg') }}" alt="logo" id="logo">
         </div>
+        <nav>
+            <ul>
+                <li><a href="/cliente">Clientes</a></li>
+                <li><a href="/producto">Productos</a></li>
+                <li><a href="/proveedor">Proveedores</a></li>
+                <li><a href="/metodo_pago">Metodos de Pago</a></li>
+                <li><a href="/parametro">⚙️Parametros⚙️</a></li>
+                <li><a href="/venta">Ventas</a></li>
+                <li><a href="/mantenimiento_maquinaria">Mantenimiento de Maquinarias</a></li>
+            </ul>
+        </nav>
+        
+        <div class="redes-sociales">
+            <img src="{{ asset('Recursos/facebook.webp') }}" alt="Facebook" id="facebook">
+            <img src="{{ asset('Recursos/tiktok.webp') }}" alt="TikTok" id="tiktok">
+            <img src="{{ asset('Recursos/whatsap.jpg') }}" alt="WhatsApp" id="whatsapp">
+        </div>
+    </div>
     </header>
 
     <div class="container-fluid" style="margin-top: 100px">

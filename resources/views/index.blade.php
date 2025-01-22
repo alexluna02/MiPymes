@@ -16,10 +16,13 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Clientes</a></li>
-                <li><a href="#">Productos</a></li>
-                <li><a href="#">Proveedores</a></li>
-                <li><a href="#">Mantenimiento de Maquinarias</a></li>
+                <li><a href="/cliente">Clientes</a></li>
+                <li><a href="/producto">Productos</a></li>
+                <li><a href="/proveedor">Proveedores</a></li>
+                <li><a href="/metodo_pago">Metodos de Pago</a></li>
+                <li><a href="/parametro">⚙️Parametros⚙️</a></li>
+                <li><a href="/venta">Ventas</a></li>
+                <li><a href="/mantenimiento_maquinaria">Mantenimiento de Maquinarias</a></li>
             </ul>
         </nav>
         
