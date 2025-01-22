@@ -15,6 +15,8 @@ use App\Http\Controllers\VentaController;
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Activity_logController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RepuestoController;
 
 
 /*
@@ -57,3 +59,21 @@ Route::resource('/venta', VentaController::class);
 Route::resource('/categoria', CategoriaController::class); 
 
 Route::resource('/activity_log', Activity_logController::class);
+
+Route::resource('/repuesto', RepuestoController::class);
+
+/*Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/admin', [ventaController::class, 'index']);
+});*/
+
+Route::view('/login','login')->name('login');
+Route::view('/registro','registro')->name('registro');
+Route::view('/index', 'index')->middleware('auth')->name('index');
+
+Route::post('/validar-registro',[LoginController::class,'registrar'])->name('validar-registro');
+Route::post('/iniciar-sesion',[LoginController::class,'login'])->name('iniciar-sesion');
+Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::resource('/producto', ProductoController::class); 
+});
