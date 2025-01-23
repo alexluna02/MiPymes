@@ -1,0 +1,76 @@
+-- Tabla: parametros
+INSERT INTO public.parametros(
+	id, nombre, valor, descripcion, tipo, created_at, updated_at)
+VALUES
+	(1, 'IVA', '12', 'Impuesto al Valor Agregado', 'impuesto', '2025-01-22', '2025-01-22'),
+	(2, 'Descuento_general', '5', 'Descuento estándar para clientes frecuentes', 'descuento', '2025-01-22', '2025-01-22');
+
+-- Tabla: proveedores
+INSERT INTO public.proveedores(
+	id, nombre, direccion, telefono, email, fecha_registro)
+VALUES
+	(1, 'AgroProveedores SA', 'Av. Central 123', '0987654321', 'contacto@agropro.com', '2025-01-20'),
+	(2, 'CampoFert', 'Calle del Campo 456', '0998765432', 'ventas@campofert.com', '2025-01-21');
+
+-- Tabla: categorias
+INSERT INTO public.categorias(
+	id, nombre, descripcion, created_at, updated_at)
+VALUES
+	(1, 'Maquinaria', 'Equipos agrícolas como tractores, bombas', '2025-01-20', '2025-01-20'),
+	(2, 'Repuestos', 'Piezas de recambio para maquinaria agrícola', '2025-01-20', '2025-01-20');
+
+-- Tabla: productos
+INSERT INTO public.productos(
+	id, nombre, descripcion, proveedor_id, categoria_id, precio, cantidad_stock, marca, modelo, "año_fabricacion", created_at, updated_at)
+VALUES
+	(1, 'Bomba de fumigación 20L', 'Bomba manual para fumigación agrícola', 1, 1, 120.50, 50, 'AgroTools', 'BF-20L', 2023, '2025-01-20', '2025-01-20'),
+	(2, 'Tractor Compacto', 'Tractor ideal para pequeñas parcelas', 2, 1, 7500.00, 10, 'TractoAgro', 'TC-100', 2022, '2025-01-21', '2025-01-21');
+
+-- Tabla: repuestos
+INSERT INTO public.repuestos(
+	id, nombre, descripcion, precio, cantidad_stock, categoria_id, marca, modelo, "año_fabricacion", created_at, updated_at)
+VALUES
+	(1, 'Filtro de aceite', 'Filtro para tractores compactos', 15.00, 100, 2, 'TractoAgro', 'FO-100', 2023, '2025-01-22', '2025-01-22'),
+	(2, 'Boquilla de repuesto', 'Boquilla para bomba de fumigación', 5.00, 200, 2, 'AgroTools', 'BR-20', 2023, '2025-01-22', '2025-01-22');
+
+-- Tabla: producto_repuesto
+INSERT INTO public.producto_repuesto(
+	producto_id, repuesto_id, created_at, updated_at)
+VALUES
+	(1, 2, '2025-01-22', '2025-01-22'),
+	(2, 1, '2025-01-22', '2025-01-22');
+
+-- Tabla: clientes
+INSERT INTO public.clientes(
+	id, nombre, direccion, telefono, email, fecha_registro, created_at, updated_at)
+VALUES
+	(1, 'Juan Perez', 'Granja La Esperanza', '0981122334', 'juan.perez@gmail.com', '2025-01-15', '2025-01-22', '2025-01-22'),
+	(2, 'Maria López', 'Finca El Progreso', '0989988776', 'maria.lopez@gmail.com', '2025-01-18', '2025-01-22', '2025-01-22');
+
+-- Tabla: metodo_pago
+INSERT INTO public.metodo_pago(
+	id, metodo, descripcion, created_at, updated_at)
+VALUES
+	(1, 'Efectivo', 'Pago en efectivo', '2025-01-22', '2025-01-22'),
+	(2, 'Transferencia', 'Pago mediante transferencia bancaria', '2025-01-22', '2025-01-22');
+
+
+--Tabla: Ventas
+INSERT INTO public.ventas(
+    id, cliente_id, cod_factura, fecha_venta, total, metodo_pago_id, estado, fecha_entrega, direccion_entrega, comentarios, created_at, updated_at)
+VALUES 
+    (1, 1, 'F001', '2025-01-22', 150.00, 1, 'completado', '2025-01-23', 'Calle Falsa 123', 'Primera venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00'),
+    (2, 2, 'F002', '2025-01-22', 200.00, 2, 'completado', '2025-01-24', 'Avenida Siempre Viva 742', 'Segunda venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00');
+
+-- Tabla: detalle_venta
+INSERT INTO public.detalle_venta(
+	id, venta_id, producto_id, cantidad, precio_unitario, subtotal, descuento, impuesto, total_linea, created_at, updated_at)
+VALUES
+	(1, 1, 1, 2, 120.50, 241.00, 5.00, 28.92, 264.92, '2025-01-22', '2025-01-22'),
+	(2, 1, 2, 1, 7500.00, 7500.00, 0.00, 900.00, 8400.00, '2025-01-22', '2025-01-22');
+
+-- Tabla: mantenimiento_maquinaria
+INSERT INTO public.mantenimiento_maquinaria(
+	id, producto_id, venta_id, fecha_mantenimiento, tipo_mantenimiento, descripcion, costo, estado_post_mantenimiento, created_at, updated_at)
+VALUES
+	(1, 2, 1, '2025-01-23', 'Preventivo', 'Cambio de aceite y revisión general', 200.00, 'Funcionando', '2025-01-23', '2025-01-23');

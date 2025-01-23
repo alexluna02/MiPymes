@@ -11,6 +11,7 @@ class CreateVentasTable extends Migration
         Schema::create('ventas', function (Blueprint $table) {
             $table->id();
             $table->string('cliente_id');
+            $table->string('cod_factura',20);
             $table->timestamp('fecha_venta')->useCurrent(); ;
             $table->decimal('total', 10, 2);
             $table->unsignedBigInteger('metodo_pago_id');

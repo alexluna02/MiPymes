@@ -11,6 +11,7 @@ class Venta extends Model
 
     protected $fillable = [
         'id', // Este no es obligatorio, pero puedes dejarlo si estás generando IDs personalizados
+        'cod_factura',
         'cliente_id',
         'fecha_venta',
         'total',
