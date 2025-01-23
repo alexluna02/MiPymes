@@ -27,17 +27,18 @@
                 <li><a href="/metodo_pago">Metodos de Pago</a></li>
                 <li><a href="/parametro">⚙️Parametros⚙️</a></li>
                 <li><a href="/venta">Ventas</a></li>
-                <li><a href="/mantenimientomaquinaria">Mantenimiento de Maquinarias</a></li>
+                <li><a href="/mantenimientomaquinaria">Mantenimiento de Maquinarias </a></li>
             </ul>
         </nav>
         
         <div class="redes-sociales">
-        <a href="https://www.facebook.com/login/web/?cuid=AYj5jj70UJ31m83htD-nrnIwit8skBmmj8-qcZp-ZHbl4YWFN2Q7w6ouZyM_rxjW44HZxAbNfjpaSE09RoNGaAh_G-jd7FAuNySb7kwKYZZxBA&e=1348131">
+        <a href="https://www.facebook.com/MaqAgroMultirepuestos">
           <img src="{{ asset('Recursos/facebook.webp') }}" alt="Facebook" id="facebook" style="cursor: pointer;">
         </a>
 
             <img src="{{ asset('Recursos/tiktok.webp') }}" alt="TikTok" id="tiktok">
             <img src="{{ asset('Recursos/whatsap.jpg') }}" alt="WhatsApp" id="whatsapp">
+            <img src="{{ asset('Recursos/candado.png') }}" alt="WhatsApp" id="login">
         </div>
     </div>
     </header>

@@ -47,6 +47,7 @@
             <img src="{{ asset('Recursos/facebook.webp') }}" alt="Facebook" id="facebook">
             <img src="{{ asset('Recursos/tiktok.webp') }}" alt="TikTok" id="tiktok">
             <img src="{{ asset('Recursos/whatsap.jpg') }}" alt="WhatsApp" id="whatsapp">
+            <img src="{{ asset('Recursos/candado.png') }}" alt="WhatsApp" id="login">
         </div>
     </div>
     <div class="contenedor-principal">

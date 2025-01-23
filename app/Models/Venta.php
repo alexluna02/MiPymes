@@ -16,8 +16,7 @@ class Venta extends Model
         'fecha_venta',
         'total',
         'metodo_pago_id',
-        'estado',
-        'fecha_entrega',
+        
         'direccion_entrega',
         'comentarios',
     ];

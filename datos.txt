@@ -57,10 +57,10 @@ VALUES
 
 --Tabla: Ventas
 INSERT INTO public.ventas(
-    id, cliente_id, cod_factura, fecha_venta, total, metodo_pago_id, estado, fecha_entrega, direccion_entrega, comentarios, created_at, updated_at)
+    id, cliente_id, cod_factura, fecha_venta, total, metodo_pago_id,comentarios, created_at, updated_at)
 VALUES 
-    (1, 1, 'F001', '2025-01-22', 150.00, 1, 'completado', '2025-01-23', 'Calle Falsa 123', 'Primera venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00'),
-    (2, 2, 'F002', '2025-01-22', 200.00, 2, 'completado', '2025-01-24', 'Avenida Siempre Viva 742', 'Segunda venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00');
+    (1, 1, 'F001', '2025-01-22', 150.00, 1, 'Primera venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00'),
+    (2, 2, 'F002', '2025-01-22', 200.00, 2,'Segunda venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00');
 
 -- Tabla: detalle_venta
 INSERT INTO public.detalle_venta(

@@ -40,18 +40,8 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="estado">Estado</label>
-                                <input type="text" name="estado" class="form-control" value="{{ $venta->estado }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="fecha_entrega">Fecha de Entrega</label>
-                                <input type="date" name="fecha_entrega" class="form-control" value="{{ $venta->fecha_entrega }}" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="direccion_entrega">Dirección de Entrega</label>
-                                <textarea name="direccion_entrega" class="form-control" required>{{ $venta->direccion_entrega }}</textarea>
-                            </div>
+                            
+                        
                             <div class="form-group">
                                 <label for="comentarios">Comentarios</label>
                                 <textarea name="comentarios" class="form-control">{{ $venta->comentarios }}</textarea>
