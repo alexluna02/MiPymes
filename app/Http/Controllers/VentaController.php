@@ -14,8 +14,9 @@ class VentaController extends Controller
 {
     public function index()
     {
+        $metodoPago = Metodo_pago::all();
         $ventas = Venta::orderBy('id', 'DESC')->paginate(10);
-        return view('venta.index', compact('ventas'));
+        return view('venta.index', compact('ventas','metodoPago'));
     }
 
     public function create()
@@ -31,6 +32,7 @@ class VentaController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
+            'cod_factura' => 'required|string',
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
@@ -51,6 +53,7 @@ class VentaController extends Controller
 
         // Crear la venta
         $venta = Venta::create($request->only([
+            'cod_factura',
             'cliente_id',
             'total',
             'metodo_pago_id',
@@ -94,19 +97,27 @@ class VentaController extends Controller
         $venta = Venta::findOrFail($id);
         $clientes = Cliente::all();
         $metodosPago = Metodo_pago::all();
-        return view('venta.edit', compact('venta', 'clientes', 'metodosPago'));
+
+        $productos = Producto::all();
+        return view('venta.edit', compact('venta', 'clientes', 'metodosPago','productos'));
     }
 
     public function update(Request $request, $id)
     {
         $request->validate([
+            'cod_factura' => 'required|string',
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
-            'metodo_pago_id' => 'required|exists:metodos_pago,id',
+            'metodo_pago_id' => 'required|exists:metodo_pago,id',
             'estado' => 'required|string',
             'fecha_entrega' => 'required|date',
             'direccion_entrega' => 'required|string',
             'comentarios' => 'nullable|string',
+            'detalles' => 'required|array',
+            'detalles.*.producto_id' => 'required|exists:productos,id',
+            'detalles.*.cantidad' => 'required|numeric|min:1',
+            'detalles.*.precio_unitario' => 'required|numeric|min:0',
+            'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
 
         $venta = Venta::findOrFail($id);

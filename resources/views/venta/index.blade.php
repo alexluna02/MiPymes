@@ -11,8 +11,10 @@
     <table class="table">
         <thead>
             <tr>
+            <th>Cod. Factura</th>
                 <th>Cliente</th>
-                <th>Fecha de Venta</th>
+                
+                <th>Metodo Pago</th>
                 <th>Total</th>
                 <th>Fecha de Entrega</th>
                 <th>Estado</th>
@@ -25,8 +27,9 @@
             @if($ventas->count())
             @foreach($ventas as $venta)
             <tr>
+            <td>{{ $venta->cod_factura}}</td>
                 <td>{{ $venta->cliente->nombre }}</td>
-                <td>{{ $venta->fecha_venta }}</td>
+                <td>{{ $venta->metodoPago->metodo}}</td>
                 <td>${{ number_format($venta->total, 2) }}</td>
                 <td>{{ $venta->fecha_entrega }}</td>
                 <td>{{ $venta->estado }}</td>

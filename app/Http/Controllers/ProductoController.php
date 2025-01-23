@@ -66,9 +66,10 @@ class ProductoController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
+    {$proveedores = Proveedor::all();
         $producto = Producto::find($id);
-        return view('producto.edit', compact('producto'));
+        $categorias = Categoria::all();
+        return view('producto.edit', compact('producto','proveedores','categorias'));
     }
 
     /**

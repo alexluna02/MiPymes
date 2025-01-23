@@ -9,6 +9,10 @@
                         <form method="POST" action="{{ route('venta.store') }}">
                             @csrf
                             <div class="form-group">
+                                <label for="cod_factura">Codigo de la Factura</label>
+                                <input type="text" name="cod_factura" class="form-control" required>
+                            </div>
+                            <div class="form-group">
                                 <label for="cliente_id">Cliente</label>
                                 <select name="cliente_id" class="form-control" required>
                                     <option value="">Seleccione un cliente</option>
