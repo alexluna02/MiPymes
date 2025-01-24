@@ -12,6 +12,7 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\MantenimientoMaquinariaController;
 use App\Http\Controllers\ParametroController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Activity_logController;
@@ -73,6 +74,8 @@ Route::view('/index', 'index')->middleware('auth')->name('index');
 Route::post('/validar-registro',[LoginController::class,'registrar'])->name('validar-registro');
 Route::post('/iniciar-sesion',[LoginController::class,'login'])->name('iniciar-sesion');
 Route::get('/logout',[LoginController::class,'logout'])->name('logout');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::resource('/producto', ProductoController::class); 

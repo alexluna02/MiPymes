@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="//capp.nicepage.com/5af5658f5419992d134c0074488a3ffef48fba0f/nicepage.css" media="screen">
 
     <link rel="stylesheet" href="{{ asset('CSS/index.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
