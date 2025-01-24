@@ -67,6 +67,7 @@ Route::resource('/repuesto', RepuestoController::class);
 });*/
 
 Route::view('/login','login')->name('login');
+Route::view('/menu','menu')->name('menu');
 Route::view('/registro','registro')->name('registro');
 Route::view('/index', 'index')->middleware('auth')->name('index');
 

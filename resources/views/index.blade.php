@@ -1,95 +1,141 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <!-- Página Principal del Proyecto -->
+    <!-- Metadatos de la Página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Slider de imágenes inspirado en diseño agrícola" />
     <title>Diseño Agrícola</title>
     <link rel="stylesheet" href="{{ asset('CSS/index.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <div class="row">
-        <div class="btn-group">
-          <form method="GET" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="btn btn-warning btn-xs">Logout</button>
-          </form>
-        </div>
-    </div>
-    <div>@auth
-        Sesion: {{Auth::user()->name}}
-        Sesion: {{Auth::id()}}
-    @endauth</div>
     <!-- Barra Principal -->
-    <div class="barra-principal">
+    <header class="barra-principal">
+        <!-- Barra de búsqueda -->
+        <div class="barra-busqueda"></div>
+
+        <!-- Redes Sociales y Logout -->
+        <div class="row">
+            <div class="btn-group">
+                <div class="redes-sociales">
+                    <a href="#" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="#" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
+                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
+
+                    <form method="GET" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-warning btn-xs"> <img
+                                src="{{ asset('Recursos/candado.png') }}" alt="Foto 2"></button>
+                    </form>
+
+                </div>
+    </header>
+
+    <!-- Barra Lateral -->
+    <aside class="sidebar">
+        <!-- Logo -->
         <div class="logo-container">
-            <img src="{{ asset('Recursos/maqagro.jpg') }}" alt="logo" id="logo">
+            <h1>MAQ - AGRO 🌱</h1>
         </div>
-        <nav>
+
+        <!-- Menú de Navegación -->
+        <nav class="menu">
             <ul>
-                <li><a href="/cliente">Clientes</a></li>
-                <li><a href="/producto">Productos</a></li>
-                <li><a href="/proveedor">Proveedores</a></li>
-                <li><a href="/metodo_pago">Metodos de Pago</a></li>
-                <li><a href="/parametro">⚙️Parametros⚙️</a></li>
-                <li><a href="/venta">Ventas</a></li>
-                <li><a href="/mantenimiento_maquinaria">Mantenimiento de Maquinarias</a></li>
- </ul>
+                <li><a href="#" onclick="toggleSubmenu(event)">🏠 Dashboard</a></li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">📦 Productos</a>
+                    <ul class="submenu">
+                        <li><a href="/producto">📋 Ver Productos</a></li>
+                        <li><a href="/producto/create">➕ Añadir Productos</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">📂 Clientes</a>
+                    <ul class="submenu">
+                        <li><a href="/cliente">📋 Ver Clientes</a></li>
+                        <li><a href="/cliente/create">➕ Añadir Clientes</a></li>
+                        <li><a href="#">✏️ Editar</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">🛒 Proveedores</a>
+                    <ul class="submenu">
+                        <li><a href="/proveedor">📋 Ver Proveedor</a></li>
+                        <li><a href="/proveedor/create">➕ Añadir Proveedor</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">🛒 Ventas</a>
+                    <ul class="submenu">
+                        <li><a href="/venta">📋 Ver Ventas</a></li>
+                        <li><a href="/venta/create">➕ Crear Venta</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">💳 Método de Pago</a>
+                    <ul class="submenu">
+                        <li><a href="/metodo_pago">📋 Métodos de Pago</a></li>
+                        <li><a href="/metodo_pago/create">➕ Crear Método de Pago</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">⚙️ Parámetros</a>
+                    <ul class="submenu">
+                        <li><a href="/parametro">📋 Ver Parámetros</a></li>
+                        <li><a href="/parametro/create">➕ Crear Parámetro</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">🔧 Mantenimiento</a>
+                    <ul class="submenu">
+                        <li><a href="/mantenimientomaquinaria">📋 Mantenimiento de Maquinarias</a></li>
+                        <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" onclick="toggleSubmenu(event)">👤 Perfil</a></li>
+            </ul>
         </nav>
-        
-        <div class="barra-busqueda">
-            <input type="text" placeholder="Buscar...">
-            <button type="submit">🔍</button>
-        </div>
 
-        <div class="redes-sociales">
-            <img src="{{ asset('Recursos/facebook.webp') }}" alt="Facebook" id="facebook">
-            <img src="{{ asset('Recursos/tiktok.webp') }}" alt="TikTok" id="tiktok">
-            <img src="{{ asset('Recursos/whatsap.jpg') }}" alt="WhatsApp" id="whatsapp">
-            <img src="{{ asset('Recursos/candado.png') }}" alt="WhatsApp" id="login">
-        </div>
-    </div>
-    <div class="contenedor-principal">
-    <div class="categorias">
-        <h1>CATEGORIAS</h1>
-        <ul>
-            <li><a href="#" class="categoria" data-categoria="Maquinaria">🚜 Maquinaria</a></li>
-            <li><a href="#" class="categoria" data-categoria="Repuestos">🔧 Repuestos</a></li>
-            <li><a href="#" class="categoria" data-categoria="Aditivos">🧪 Aditivos</a></li>
-            <li><a href="#" class="categoria" data-categoria="Accesorios de sistemas de riego">💧 Accesorios sistema de riego</a></li>
-            <li><a href="#" class="categoria" data-categoria="Varios">📦 Varios</a></li>
-        </ul>
-    </div>
+    </aside>
 
-    <!-- Slider -->
-    <div class="slider">
-        <div class="slider-images">
-            <img src="{{ asset('data1/images/foto1.jpg') }}" alt="Foto 1">
-            <img src="{{ asset('data1/images/foto2.jpg') }}" alt="Foto 2">
-            <img src="{{ asset('data1/images/foto3.jpg') }}" alt="Foto 3">
-            <img src="{{ asset('data1/images/foto4.jpg') }}" alt="Foto 4">
-            <img src="{{ asset('data1/images/foto5.jpg') }}" alt="Foto 5">
-        </div>
+    <!-- Contenido Principal -->
+    <main class="contenedor-principal">
+        <section class="slider">
+            <!-- Imágenes del Slider -->
+            <div class="slider-images">
+                <img src="{{ asset('data1/images/foto2.jpg') }}" alt="Foto 2">
+                <img src="{{ asset('data1/images/foto3.jpg') }}" alt="Foto 3">
+                <img src="{{ asset('data1/images/foto4.jpg') }}" alt="Foto 4">
+                <img src="{{ asset('data1/images/foto5.jpg') }}" alt="Foto 5">
+            </div>
 
-        <div class="slider-message">
+            <!-- Mensaje del Slider -->
+            <div class="slider-message">
                 <h1>Compra y Venta de Maquinaria Agrícola</h1>
                 <p>Maq-Agro</p>
             </div>
-        <div class="slider-navigation">
-            <a href="#" id="prev">&#10094;</a>
-            <a href="#" id="next">&#10095;</a>
-        </div>
-    </div>
 
-    </div>
-    <!-- Contenedor de productos -->
-    <div id="productos-container">
-        <!-- Aquí se mostrarán los productos filtrados -->
-    </div>
+            <!-- Navegación del Slider -->
+            <div class="slider-navigation">
+                <a href="#" id="prev">&#10094;</a>
+                <a href="#" id="next">&#10095;</a>
+            </div>
+        </section>
+    </main>
 
-    <!-- Script -->
+    <!-- Scripts -->
     <script>
+        // Función para mostrar/ocultar submenús
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const parent = event.target.parentElement;
+            parent.classList.toggle('active');
+        }
+
         // Slider
         let currentIndex = 0;
         const images = document.querySelectorAll('.slider-images img');
@@ -104,8 +150,7 @@
             } else {
                 currentIndex = index;
             }
-
-            slider.style.transform = translateX(-${currentIndex * 100}%);
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
 
         document.getElementById('prev').addEventListener('click', (event) => {
@@ -123,47 +168,7 @@
         }, 5000);
 
         showImage(currentIndex);
-
-        // Filtrar productos por categoría
-        document.querySelectorAll('.categoria').forEach(categoria => {
-            categoria.addEventListener('click', function (event) {
-                event.preventDefault();
-
-                const categoriaSeleccionada = this.getAttribute('data-categoria');
-                const productosContainer = document.getElementById('productos-container');
-
-                // Limpiar contenido anterior
-                productosContainer.innerHTML = '<p>Cargando productos...</p>';
-
-                // Petición AJAX
-                fetch(${window.location.origin}/productos/categoria/${categoriaSeleccionada})
-                    .then(response => {
-                        console.log('Respuesta del servidor:', response);
-                        if (!response.ok) {
-                            throw new Error('Error en la respuesta del servidor');
-                        }
-                        return response.json();
-                    })
-                    .then(productos => {
-                        // Mostrar productos
-                        if (productos.length > 0) {
-                            productosContainer.innerHTML = productos.map(producto => `
-                                <div class="producto">
-                                    <h3>${producto.nombre}</h3>
-                                    <p>${producto.descripcion}</p>
-                                    <p><strong>Precio:</strong> $${producto.precio}</p>
-                                </div>
-                            `).join('');
-                        } else {
-                            productosContainer.innerHTML = '<p>No hay productos en esta categoría.</p>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error al cargar los productos:', error);
-                        productosContainer.innerHTML = '<p>Hubo un problema al cargar los productos. Intenta de nuevo más tarde.</p>';
-                    });
-            });
-        });
     </script>
 </body>
+
 </html>
