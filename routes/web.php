@@ -16,7 +16,7 @@ use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Activity_logController;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginController; 
 use App\Http\Controllers\RepuestoController;
 
 
