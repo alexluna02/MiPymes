@@ -16,8 +16,7 @@
                 
                 <th>Metodo Pago</th>
                 <th>Total</th>
-                <th>Fecha de Entrega</th>
-                <th>Estado</th>
+
 
                 <th>Total</th>
                 <th>Acciones</th>
@@ -31,7 +30,7 @@
                 <td>{{ $venta->cliente->nombre }}</td>
                 <td>{{ $venta->metodoPago->metodo}}</td>
                 <td>${{ number_format($venta->total, 2) }}</td>
-                <td>{{ $venta->fecha_entrega }}</td>
+                
                 <td>{{ $venta->estado }}</td>
 
                 <td>{{$venta->total}}</td>

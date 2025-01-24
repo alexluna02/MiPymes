@@ -15,9 +15,7 @@ class CreateVentasTable extends Migration
             $table->timestamp('fecha_venta')->useCurrent(); ;
             $table->decimal('total', 10, 2);
             $table->unsignedBigInteger('metodo_pago_id');
-            $table->string('estado');
-            $table->date('fecha_entrega');
-            $table->text('direccion_entrega');
+            
             $table->text('comentarios')->nullable();
             $table->timestamps();
 

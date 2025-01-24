@@ -41,3 +41,14 @@
 </body>
 
 </html>
+<script>
+    document.querySelector('form').addEventListener('submit', function(event) {
+        var password = document.querySelector('input[name="password"]').value;
+        var passwordConfirmation = document.querySelector('input[name="password_confirmation"]').value;
+
+        if (password !== passwordConfirmation) {
+            event.preventDefault();
+            alert('Las contraseñas no coinciden.');
+        }
+    });
+</script>

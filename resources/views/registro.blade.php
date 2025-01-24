@@ -23,9 +23,17 @@
                     <label for="password_confirmation">Confirmar Contraseña</label>
                     <input type="password" class="form-control" name="password_confirmation" required>
                 </div>
+                <div class="form-group">
+                    <label for="role">Rol</label>
+                    <select name="role" class="form-control" required>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block">Registrar</button>
                 <a href="/login" class="btn btn-danger btn-primary btn-block">Regresar</a>
-            </form>
         </div>
+        </form>
     </div>
 @endsection

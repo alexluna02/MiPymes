@@ -36,8 +36,7 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
-            'estado' => 'required|string',
-            'fecha_entrega' => 'required|date',
+            
             'direccion_entrega' => 'required|string',
             'comentarios' => 'nullable|string',
             'detalles' => 'required|array',

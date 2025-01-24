@@ -1,0 +1,203 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!-- Metadatos de la Página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Slider de imágenes inspirado en diseño agrícola" />
+    <title>Diseño Agrícola</title>
+    <link rel="stylesheet" href="{{ asset('CSS/index.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- Barra Principal -->
+    <header class="barra-principal">
+        <!-- Barra de búsqueda -->
+        <div class="barra-busqueda"></div>
+
+        <!-- Redes Sociales y Logout -->
+        <div class="row">
+            <div class="btn-group">
+            <div class="redes-sociales">
+    <a href="#" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+    <a href="#" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
+    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
+
+                <form method="GET" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-warning btn-xs"> <img src="{{ asset('Recursos/candado.png') }}" alt="Foto 2"></button>
+                </form>
+            
+        </div>
+    </header>
+
+    <!-- Barra Lateral -->
+    <aside class="sidebar">
+        <!-- Logo -->
+        <div class="logo-container">
+            <h1>MAQ - AGRO 🌱</h1>
+        </div>
+
+        <!-- Menú de Navegación -->
+        <nav class="menu">
+    <ul>
+        <li><a href="#" onclick="toggleSubmenu(event)">🏠 Dashboard</a></li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">📦 Productos</a>
+            <ul class="submenu">
+                <li><a href="/producto">📋 Ver Productos</a></li>
+                <li><a href="/producto/create">➕ Añadir Productos</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">📂 Clientes</a>
+            <ul class="submenu">
+                <li><a href="/cliente">📋 Ver Clientes</a></li>
+                <li><a href="/cliente/create">➕ Añadir Clientes</a></li>
+                <li><a href="#">✏️ Editar</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">🛒 Proveedores</a>
+            <ul class="submenu">
+                <li><a href="/proveedor">📋 Ver Proveedor</a></li>
+                <li><a href="/proveedor/create">➕ Añadir Proveedor</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">🛒 Ventas</a>
+            <ul class="submenu">
+                <li><a href="/venta">📋 Ver Ventas</a></li>
+                <li><a href="/venta/create">➕ Crear Venta</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">💳 Método de Pago</a>
+            <ul class="submenu">
+                <li><a href="/metodo_pago">📋 Métodos de Pago</a></li>
+                <li><a href="/metodo_pago/create">➕ Crear Método de Pago</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">⚙️ Parámetros</a>
+            <ul class="submenu">
+                <li><a href="/parametro">📋 Ver Parámetros</a></li>
+                <li><a href="/parametro/create">➕ Crear Parámetro</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" onclick="toggleSubmenu(event)">🔧 Mantenimiento</a>
+            <ul class="submenu">
+                <li><a href="/mantenimientomaquinaria">📋 Mantenimiento de Maquinarias</a></li>
+                <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
+            </ul>
+        </li>
+        <li><a href="#" onclick="toggleSubmenu(event)">👤 Perfil</a></li>
+    </ul>
+</nav>
+
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main class="contenedor-principal">
+        <section class="slider">
+            <!-- Imágenes del Slider -->
+            <div class="slider-images">
+                <img src="{{ asset('data1/images/foto2.jpg') }}" alt="Foto 2">
+                <img src="{{ asset('data1/images/foto3.jpg') }}" alt="Foto 3">
+                <img src="{{ asset('data1/images/foto4.jpg') }}" alt="Foto 4">
+                <img src="{{ asset('data1/images/foto5.jpg') }}" alt="Foto 5">
+            </div>
+
+            <!-- Mensaje del Slider -->
+            <div class="slider-message">
+                <h1>Compra y Venta de Maquinaria Agrícola</h1>
+                <p>Maq-Agro</p>
+            </div>
+
+            <!-- Navegación del Slider -->
+            <div class="slider-navigation">
+                <a href="#" id="prev">&#10094;</a>
+                <a href="#" id="next">&#10095;</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // Función para mostrar/ocultar submenús
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const parent = event.target.parentElement;
+            parent.classList.toggle('active');
+        }
+        </script>
+        
+</body>
+</html>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, user-scalable=yes">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="//capp.nicepage.com/5af5658f5419992d134c0074488a3ffef48fba0f/nicepage.css" media="screen">
+
+    <link rel="stylesheet" href="{{ asset('CSS/index.css') }}">
+
+</head>
+
+<body>
+    <header class="u-clearfix u-header u-header" id="sec-8087">
+    <div class="barra-principal">
+        <div class="logo-container">
+            <img src="{{ asset('Recursos/maqagro.jpg') }}" alt="logo" id="logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/cliente">Clientes</a></li>
+                <li><a href="/producto">Productos</a></li>
+                <li><a href="/proveedor">Proveedores</a></li>
+                <li><a href="/metodo_pago">Metodos de Pago</a></li>
+                <li><a href="/parametro">⚙️Parametros⚙️</a></li>
+                <li><a href="/venta">Ventas</a></li>
+                <li><a href="/mantenimientomaquinaria">Mantenimiento de Maquinarias </a></li>
+            </ul>
+        </nav>
+        
+        <div class="redes-sociales">
+        <a href="https://www.facebook.com/MaqAgroMultirepuestos">
+          <img src="{{ asset('Recursos/facebook.webp') }}" alt="Facebook" id="facebook" style="cursor: pointer;">
+        </a>
+
+            <img src="{{ asset('Recursos/tiktok.webp') }}" alt="TikTok" id="tiktok">
+            <img src="{{ asset('Recursos/whatsap.jpg') }}" alt="WhatsApp" id="whatsapp">
+            <img src="{{ asset('Recursos/candado.png') }}" alt="WhatsApp" id="login">
+        </div>
+    </div>
+    </header>
+
+    <div class="container-fluid" style="margin-top: 100px">
+
+        @yield('content')
+    </div>
+    <style type="text/css">
+        .table {
+            border-top: 2px solid #ccc;
+
+        }
+    </style>
+</body>
+
+</html>
