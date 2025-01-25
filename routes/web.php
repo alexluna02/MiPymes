@@ -12,11 +12,10 @@ use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\MantenimientoMaquinariaController;
 use App\Http\Controllers\ParametroController;
 use App\Http\Controllers\VentaController;
-<<<<<<< HEAD
+
 use App\Http\Controllers\DashboardController;
 
-=======
->>>>>>> 57ce0c0866e8e95c927a89b131ce91feb4c726b2
+
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\Activity_logController;
 use App\Http\Controllers\LoginController; 
@@ -60,7 +59,9 @@ Route::post('/validar-registro', [LoginController::class, 'registrar'])->name('v
 Route::post('/iniciar-sesion', [LoginController::class, 'login'])->name('iniciar-sesion');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/registro', [LoginController::class, 'registro'])->name('registro');
+Route::put('/venta/{id}', [VentaController::class, 'update'])->name('venta.update');
 
+Route::post('/parametro/cambiar-estado/{id}', [ParametroController::class, 'cambiarEstado']);
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::group(['middleware' => ['auth']], function () {

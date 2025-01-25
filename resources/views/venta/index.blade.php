@@ -1,6 +1,13 @@
 @extends('plantilla.plantilla')
 
 @section('content')
+@if (session('error'))
+<div class="col-md-8 col-md-offset-2">
+    <div class="alert alert-danger" role="alert">
+        {{ session('error') }}
+    </div>
+</div>
+@endif
 <div class="container mt-4">
     <h1 class="text-center">Listado de Ventas</h1>
     <div class="pull-right mb-3">
@@ -17,8 +24,7 @@
                 <th>Metodo Pago</th>
                 <th>Total</th>
 
-
-                <th>Total</th>
+                <th>Fecha de Registro</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -30,10 +36,8 @@
                 <td>{{ $venta->cliente->nombre }}</td>
                 <td>{{ $venta->metodoPago->metodo}}</td>
                 <td>${{ number_format($venta->total, 2) }}</td>
-                
-                <td>{{ $venta->estado }}</td>
+                <td>{{ $venta->created_at}}</td>
 
-                <td>{{$venta->total}}</td>
                 <td>
                     <a href="{{ route('venta.edit', $venta->id) }}" class="btn btn-sm btn-warning">Editar</a>
                     <form action="{{ route('venta.destroy', $venta->id) }}" method="POST" style="display:inline;">
@@ -52,8 +56,8 @@
                                 <th>Producto</th>
                                 <th>Cantidad</th>
                                 <th>Precio Unitario</th>
-                                <th>Descuento</th>
-                                <th>Impuesto</th>
+                                <th>Descuento%</th>
+                                <th>IVA %</th>
                                 <th>Subtotal</th>
                                 <th>Total</th>
                             </tr>

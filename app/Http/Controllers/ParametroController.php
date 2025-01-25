@@ -14,7 +14,7 @@ class ParametroController extends Controller
      */
     public function index()
     {
-        $parametros = Parametro::orderBy('id', 'DESC')->paginate(10);
+        $parametros = Parametro::orderBy('tipo', 'DESC')->paginate(10);
         return view('parametro.index', compact('parametros'));
     }
 
@@ -40,9 +40,18 @@ class ParametroController extends Controller
             'nombre' => 'required',
             'valor' => 'required|numeric',
             'tipo' => 'required|string',
+            
         ]);
-
-        Parametro::create($request->all());
+        $parametro = new Parametro([
+            'nombre' => $request->input('nombre'),
+            'valor' => $request->input('valor'),
+            'descripcion' => $request->input('descripcion'),
+            'tipo' => $request->input('tipo'),
+            'estado' => false, 
+        ]);
+    
+        $parametro->save();
+        //Parametro::create($request->all());
 
         return redirect()->route('parametro.index')->with('success', 'Parámetro creado satisfactoriamente.');
     }
@@ -84,6 +93,7 @@ class ParametroController extends Controller
             'nombre' => 'required',
             'valor' => 'required|numeric',
             'tipo' => 'required|string',
+            'estado'=>'required|boolean',
         ]);
 
         $parametro = Parametro::find($id);
@@ -103,4 +113,22 @@ class ParametroController extends Controller
         Parametro::find($id)->delete();
         return redirect()->route('parametro.index')->with('success', 'Parámetro eliminado satisfactoriamente.');
     }
+    public function cambiarEstado(Request $request, $id)
+{
+    $parametro = Parametro::findOrFail($id);
+
+    if ($request->tipo === 'impuesto') {
+        // Desactivar todos los otros impuestos
+        Parametro::where('tipo', 'impuesto')->update(['estado' => false]);
+    }
+
+    if ($request->tipo === 'descuento' || $request->tipo === 'impuesto') {
+        // Cambiar el estado del parámetro actual
+        $parametro->estado = $request->estado;
+        $parametro->save();
+    }
+
+    return response()->json(['success' => true]);
+}
+
 }

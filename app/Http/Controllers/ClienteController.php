@@ -29,12 +29,12 @@ class ClienteController extends Controller
     public function store(Request $request)
 {
     $request->validate([
-        'id' => 'required',
         'nombre' => 'required',
+        'cedula' => 'required',
         'direccion' => 'required',
         'telefono' => 'required',
         'email' => 'required',
-        'fecha_registro' => 'required'
+        
     ]);
 
     // Crear el nuevo cliente
@@ -68,12 +68,11 @@ class ClienteController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'id' => 'required',
             'nombre' => 'required',
+            'cedula' => 'required',
             'direccion' => 'required',
             'telefono' => 'required',
             'email' => 'required',
-            'fecha_registro' => 'required'
         ]);
     
  
@@ -83,13 +82,11 @@ class ClienteController extends Controller
             return redirect()->route('cliente.index')->with('error', 'Cliente no encontrado');
         }
     
-        $cliente->id = $request->input('id');
         $cliente->nombre = $request->input('nombre');
+        $cliente->cedula = $request->input('cedula');
         $cliente->direccion = $request->input('direccion');
         $cliente->telefono = $request->input('telefono');
         $cliente->email = $request->input('email');
-        $cliente->fecha_registro = $request->input('fecha_registro');
-    
 
         $cliente->save();
     

@@ -5,7 +5,7 @@
     <div class="col-md-8 col-md-offset-2">
       <div class="panel panel-default">
         <div class="panel-body">
-          <div class="pull-left"><h3>Lista Libros</h3></div>
+          <div class="pull-left"><h3>Lista de Clientes</h3></div>
           <div class="pull-right">
             <div class="btn-group">
               <a href="{{ route('cliente.create') }}" class="btn btn-info" >Añadir Cliente</a>
@@ -27,15 +27,15 @@
               @if($clientes->count())  
               @foreach($clientes as $cliente)  
               <tr>
-                <td>{{$cliente->id}}</td>
+                <td>{{$cliente->cedula}}</td>
                 <td>{{$cliente->nombre}}</td>
                 <td>{{$cliente->direccion}}</td>
                 <td>{{$cliente->telefono}}</td>
                 <td>{{$cliente->email}}</td>
-                <td>{{$cliente->fecha_registro}}</td>
+                <td>{{$cliente->created_at}}</td>
                 <td><a class="btn btn-primary btn-xs" href="{{ route('cliente.edit', $cliente->id) }}" ><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
-                  <form action="{{ route('cliente.destroy', $cliente->id)}}" method="post">
+                  <form action="{{ route('cliente.destroy', $cliente->id)}}" method="post" onsubmit="return confirm('Si eliminas el cliente eliminaras las ventas asociadas ¿Estás seguro de que deseas eliminar este cliente?');">
                    {{csrf_field()}}
                    <input name="_method" type="hidden" value="DELETE">
 

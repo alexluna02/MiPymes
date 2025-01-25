@@ -19,6 +19,7 @@ class CreateParametrosTable extends Migration
             $table->decimal('valor', 10, 2);
             $table->text('descripcion')->nullable();
             $table->string('tipo', 100);
+            $table->boolean('estado');
             $table->timestamps();
         });
     }

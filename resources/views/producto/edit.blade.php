@@ -58,6 +58,12 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="btn-group">
+                                        <a href="{{ route('proveedor.create') }}?redirect_to={{ url()->current() }}" class="btn btn-primary">Crear nueva proveedor</a>
+
+                                    </div>
+                                </div>
                             </div>
 
                             <label for="categoria_id">Categoría</label>
@@ -70,6 +76,12 @@
                                             <option value="{{ $categoria->id }}" {{ $producto->categoria_id == $categoria->id ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="btn-group">
+                                        <a href="{{ route('categoria.create') }}?redirect_to={{ url()->current() }}" class="btn btn-primary">Crear nueva categoría</a>
+
                                     </div>
                                 </div>
                             </div>

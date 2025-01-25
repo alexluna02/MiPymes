@@ -9,5 +9,5 @@ class Parametro extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nombre', 'valor', 'descripcion', 'tipo'];
+    protected $fillable = ['nombre', 'valor', 'descripcion', 'tipo','estado'];
 }

@@ -9,6 +9,7 @@
                 <form action="{{ route('parametro.update', $parametro->id) }}" method="POST">
                     @csrf
                     @method('PATCH')
+                    <input type="text" name="estado" id="estado" class="form-control"  value="{{ $parametro->estado }}" hidden>
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
                         <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $parametro->nombre }}" required>

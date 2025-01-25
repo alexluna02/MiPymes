@@ -7,6 +7,7 @@ use App\Models\Detalle_venta;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Metodo_pago;
+use App\Models\Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -16,7 +17,7 @@ class VentaController extends Controller
     {
         $metodoPago = Metodo_pago::all();
         $ventas = Venta::orderBy('id', 'DESC')->paginate(10);
-        return view('venta.index', compact('ventas','metodoPago'));
+        return view('venta.index', compact('ventas', 'metodoPago'));
     }
 
     public function create()
@@ -25,7 +26,14 @@ class VentaController extends Controller
         $clientes = Cliente::all();
         $metodosPago = Metodo_pago::all();
         $productos = Producto::all();
-        return view('venta.create', compact('clientes', 'metodosPago', 'productos', 'ventas'));
+        $iva = Parametro::where('tipo', 'impuesto')->where('estado', true)->first();
+
+        if (!$iva) {
+            // Lanzar un error controlado si no existe un IVA activo
+            session()->flash('error', 'No se encontró un IVA activo. Verifique los parámetros.');
+            return back();
+        }
+        return view('venta.create', compact('clientes', 'metodosPago', 'productos', 'ventas', 'iva'));
     }
 
     public function store(Request $request)
@@ -36,8 +44,7 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
-            
-            'direccion_entrega' => 'required|string',
+
             'comentarios' => 'nullable|string',
             'detalles' => 'required|array',
             'detalles.*.producto_id' => 'required|exists:productos,id',
@@ -58,7 +65,6 @@ class VentaController extends Controller
             'metodo_pago_id',
             'estado',
             'fecha_entrega',
-            'direccion_entrega',
             'comentarios'
         ]));
 
@@ -73,8 +79,8 @@ class VentaController extends Controller
                 'descuento' => $detalle['descuento'],
                 //'impuesto' => $detalle['subtotal'],
                 //'descuento' => 50,
-                'impuesto' => 0.15,
-                'total_linea' => $detalle['subtotal']+($detalle['subtotal'] * 0.15),
+                'impuesto' => $detalle['iva'],
+                'total_linea' => $detalle['subtotal'] + ($detalle['subtotal'] * $detalle['iva']),
             ]);
         }
 
@@ -83,7 +89,6 @@ class VentaController extends Controller
 
         return redirect()->route('venta.index')->with('success', 'Venta registrada con éxito');
     }
-
 
     public function show($id)
     {
@@ -96,9 +101,16 @@ class VentaController extends Controller
         $venta = Venta::findOrFail($id);
         $clientes = Cliente::all();
         $metodosPago = Metodo_pago::all();
-
+        $detalles = $venta->detalles; // Esto recupera solo los detalles de la venta específica
         $productos = Producto::all();
-        return view('venta.edit', compact('venta', 'clientes', 'metodosPago','productos'));
+        $iva = Parametro::where('tipo', 'impuesto')->where('estado', true)->first();
+
+        if (!$iva) {
+            // Lanzar un error controlado si no existe un IVA activo
+            session()->flash('error', 'No se encontró un IVA activo. Verifique los parámetros.');
+            return back();
+        }
+        return view('venta.edit', compact('venta', 'clientes', 'metodosPago', 'productos', 'detalles', 'iva'));
     }
 
     public function update(Request $request, $id)
@@ -108,10 +120,6 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
-            'estado' => 'required|string',
-            'fecha_entrega' => 'required|date',
-            'direccion_entrega' => 'required|string',
-            'comentarios' => 'nullable|string',
             'detalles' => 'required|array',
             'detalles.*.producto_id' => 'required|exists:productos,id',
             'detalles.*.cantidad' => 'required|numeric|min:1',
@@ -119,8 +127,34 @@ class VentaController extends Controller
             'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
 
-        $venta = Venta::findOrFail($id);
-        $venta->update($request->all());
+        DB::transaction(function () use ($request, $id) {
+            $venta = Venta::findOrFail($id);
+            $venta->update($request->only([
+                'cod_factura',
+                'cliente_id',
+                'total',
+                'metodo_pago_id',
+                'comentarios',
+            ]));
+
+            // Actualizar detalles
+            foreach ($request->input('detalles') as $detalle) {
+                $detalleVenta = Detalle_venta::find($detalle['id']);
+                $subtotal = $detalle['cantidad'] * $detalle['precio_unitario'];
+                $total_linea = $subtotal + ($subtotal * $detalle['iva'] / 100); // Si tienes IVA
+                if ($detalleVenta) {
+                    $detalleVenta->update([
+                        'producto_id' => $detalle['producto_id'],
+                        'cantidad' => $detalle['cantidad'],
+                        'precio_unitario' => $detalle['precio_unitario'],
+                        'subtotal' => $detalle['subtotal'],
+                        'descuento' => $detalle['descuento'],
+                        'impuesto' => $detalle['iva'],
+
+                    ]);
+                }
+            }
+        });
 
         return redirect()->route('venta.index')->with('success', 'Venta actualizada con éxito');
     }

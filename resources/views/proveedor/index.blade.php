@@ -1,7 +1,7 @@
 @extends('plantilla.plantilla')
 @section('content')
 <div class="row">
-  
+
   <section class="content">
 
     <div class="col-md-8 col-md-offset-2">
@@ -37,11 +37,12 @@
                   <td>{{$proveedor->fecha_registro}}</td>
                   <td><a class="btn btn-primary btn-xs" href="{{ route('proveedor.edit', $proveedor->id) }}"><span class="glyphicon glyphicon-pencil"></span>Editar</a></td>
                   <td>
-                    <form action="{{ route('proveedor.destroy', $proveedor->id)}}" method="post">
+                    <form action="{{ route('proveedor.destroy', $proveedor->id)}}" method="post" onsubmit="return confirm('Si eliminas el Proveedor eliminaras los productos asociados ¿Estás seguro de que deseas eliminar este proveedor?');">
                       {{csrf_field()}}
                       <input name="_method" type="hidden" value="DELETE">
-
-                      <button class="btn btn-danger btn-xs" value="Eliminar" type="submit"><span class="glyphicon glyphicon-trash"></span></button>
+                      <button class="btn btn-danger btn-xs"  type="submit">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>
                     </form>
                   </td>
                 </tr>

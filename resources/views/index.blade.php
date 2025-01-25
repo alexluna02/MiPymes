@@ -45,7 +45,7 @@
         <!-- Menú de Navegación -->
         <nav class="menu">
             <ul>
-                <li><a href="#" onclick="toggleSubmenu(event)">🏠 Dashboard</a></li>
+                <li><a href="/dashboard" >🏠 Dashboard</a></li>
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">📦 Productos</a>
                     <ul class="submenu">

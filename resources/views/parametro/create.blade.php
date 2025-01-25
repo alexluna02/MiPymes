@@ -4,7 +4,9 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3 class="panel-title">Crear Parámetro</h3></div>
+            <div class="panel-heading">
+                <h3 class="panel-title">Crear Parámetro</h3>
+            </div>
             <div class="panel-body">
                 <form action="{{ route('parametro.store') }}" method="POST">
                     @csrf
@@ -13,7 +15,7 @@
                         <input type="text" name="nombre" id="nombre" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="valor">Valor</label>
+                        <label for="valor">Valor %</label>
                         <input type="number" name="valor" id="valor" class="form-control" step="0.01" required>
                     </div>
                     <div class="form-group">
@@ -22,7 +24,12 @@
                     </div>
                     <div class="form-group">
                         <label for="tipo">Tipo</label>
-                        <input type="text" name="tipo" id="tipo" class="form-control" required>
+                        <!--<input type="text" name="tipo" id="tipo" class="form-control" required>-->
+                        <select name="tipo"id="tipo"  class="form-control">
+                            <option value="impuesto" >Impuesto IVA</option>
+                            <option value="descuento" >Descuento</option>
+                        </select>
+
                     </div>
                     <button type="submit" class="btn btn-success">Guardar</button>
                     <a href="{{ route('parametro.index') }}" class="btn btn-info">Atrás</a>
