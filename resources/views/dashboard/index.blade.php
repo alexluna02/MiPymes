@@ -185,6 +185,18 @@
                 }
             }
         });
+   // Cambio de año
+   let anioActual = parseInt(document.getElementById('anioActual').textContent.split(': ')[1]);
+        document.getElementById('anteriorAnio').addEventListener('click', function() {
+            cambiarAnio(--anioActual);
+        });
+        document.getElementById('siguienteAnio').addEventListener('click', function() {
+            cambiarAnio(++anioActual);
+        });
+
+        function cambiarAnio(anio) {
+            window.location.href = "{{ url('/dashboard') }}?anio=" + anio;
+        }
     });
 </script>
 @endsection
