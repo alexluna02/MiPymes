@@ -106,7 +106,7 @@
 
     </aside>
 
-    <div class="container-fluid" style="margin-top: 100px">
+    <div class="container-fluid" style="margin-top: 50px">
 
         @yield('content')
     </div>
