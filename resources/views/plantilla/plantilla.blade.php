@@ -13,8 +13,8 @@
    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+    <link rel="stylesheet" href="{{ asset('CSS/crudd.css') }}">
 
 
 </head>
@@ -22,16 +22,15 @@
 <body>
      
 <header class="barra-principal">
-        <!-- Barra de búsqueda -->
         <div class="barra-busqueda"></div>
 
         <!-- Redes Sociales y Logout -->
         <div class="row">
             <div class="btn-group">
-            <div class="redes-sociales">
-    <a href="#" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
-    <a href="#" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
-    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
+             <div class="redes-sociales">
+             <a href="#" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+             <a href="#" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
+             <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
 
                 <form method="GET" action="{{ route('logout') }}">
                     @csrf
@@ -39,7 +38,7 @@
                 </form>
             
         </div>
-    </header>
+</header>
     <aside class="sidebar">
         <!-- Logo -->
         <div class="logo-container">
@@ -100,6 +99,16 @@
                         <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">🔧 Repuestos</a>
+                    <ul class="submenu">
+                        <li><a href="/repuesto">📋 Repuestos</a></li>
+                        <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
+                    </ul>
+                </li>
+
+
                 <li><a href="#" onclick="toggleSubmenu(event)">👤 Perfil</a></li>
             </ul>
         </nav>
