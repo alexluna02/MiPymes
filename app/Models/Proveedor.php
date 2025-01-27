@@ -14,4 +14,8 @@ class Proveedor extends Model
     public $timestamps = false;
     protected $table = 'proveedores';
     protected $fillable = ['nombre','direccion','telefono','email','fecha_registro'];
+    public function productos()
+    {
+        return $this->hasMany(Producto::class, 'proveedor_id');
+    }
 }

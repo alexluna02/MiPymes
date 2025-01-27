@@ -2,46 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use App\Models\Proveedor;
 use App\Models\Producto;
+use App\Models\Cliente;
 use App\Models\Venta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Ejemplo: Datos de productos por categoría
-        $categorias = Producto::select('categoria_id', DB::raw('count(*) as total'))
-            ->groupBy('categoria_id')
+        // Año seleccionado (por defecto, el actual)
+        $anio = $request->query('anio', date('Y'));
+
+        // Datos de productos por categoría
+        $categorias = \App\Models\Categoria::all()->pluck('nombre');
+        $valoresCategorias = \App\Models\Categoria::withCount('productos')->get()->pluck('productos_count');
+        // Datos de productos por proveedor
+        $prod_prov = Proveedor::all()->pluck('nombre');
+        $valoresprod_prov = Proveedor::withCount('productos')->get()->pluck('productos_count');
+
+        // Ventas por mes del año seleccionado
+        $ventasPorMes = Venta::select(DB::raw('EXTRACT(MONTH FROM fecha_venta) as month, COUNT(*) as total'))
+            ->whereYear('fecha_venta', $anio)
+            ->groupBy('month')
+            ->orderBy('month')
             ->get();
 
-        $nombresCategorias = $categorias->pluck('categoria_id')->map(function ($id) {
-            return \App\Models\Categoria::find($id)->nombre ?? 'Sin categoría';
+        $meses = collect(range(1, 12))->map(function ($mes) {
+            return DateTime::createFromFormat('!m', $mes)->format('F');
         });
 
-        $valoresCategorias = $categorias->pluck('total');
-
-        // Obtener el número de ventas por mes
-        $ventasPorMes = Venta::select(DB::raw('EXTRACT(YEAR FROM fecha_venta) as year, EXTRACT(MONTH FROM fecha_venta) as month, COUNT(*) as total'))
-    ->groupBy('year', 'month')
-    ->orderBy('year', 'asc')
-    ->orderBy('month', 'asc') // Asegura el orden correcto por año y mes
-    ->get();
-
-$meses = $ventasPorMes->map(function ($venta) {
-    return $venta->year . '-' . str_pad($venta->month, 2, '0', STR_PAD_LEFT);
-});
-
-$valoresVentas = $ventasPorMes->pluck('total');
-
-
+        $valoresVentas = $meses->map(function ($mes, $indice) use ($ventasPorMes) {
+            $venta = $ventasPorMes->firstWhere('month', $indice + 1);
+            return $venta ? $venta->total : 0;
+        });
+        //total dde las tablas
+        $totalProductos = Producto::count();
+        $totalVentas = Venta::count();
+        $totalClientes = Cliente::count();
+        $totalProveedores = Proveedor::count();
         return view('dashboard.index', [
-            'categorias' => $nombresCategorias,
+            'categorias' => $categorias,
             'valores' => $valoresCategorias,
             'meses' => $meses,
-            'valoresVentas' => $valoresVentas
+            'valoresVentas' => $valoresVentas,
+            'anio' => $anio,
+            'prod_prov' => $prod_prov,
+            'valoresprod_prov' => $valoresprod_prov,
+            'totalProductos' => $totalProductos,
+            'totalVentas' => $totalVentas,
+            'totalClientes' => $totalClientes,
+            'totalProveedores' => $totalProveedores,
+
         ]);
     }
 }
-
