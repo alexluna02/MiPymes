@@ -10,11 +10,13 @@
 @endif
 <div class="container mt-4">
     <h1 class="text-center">Listado de Ventas</h1>
+    @role('vendedor')
     <div class="pull-right mb-3">
         <div class="btn-group">
             <a href="{{ route('venta.create') }}" class="btn btn-info">Registrar Venta</a>
         </div>
     </div>
+    @endrole
     <table class="table">
         <thead>
             <tr>

@@ -70,6 +70,7 @@
                         <li><a href="/proveedor/create">➕ Añadir Proveedor</a></li>
                     </ul>
                 </li>
+                @hasanyrole('admin|vendedor')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">🛒 Ventas</a>
                     <ul class="submenu">
@@ -77,6 +78,7 @@
                         <li><a href="/venta/create">➕ Crear Venta</a></li>
                     </ul>
                 </li>
+                @endhasanyrole
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">💳 Método de Pago</a>
                     <ul class="submenu">

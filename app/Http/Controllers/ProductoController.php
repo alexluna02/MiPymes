@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\Categoria;
+use App\Models\Repuesto;
 
 class ProductoController extends Controller
 {
@@ -25,6 +26,7 @@ class ProductoController extends Controller
     {
         $proveedores = Proveedor::all();
         $categorias = Categoria::all();
+        
         return view('producto.create', compact('proveedores','categorias'));
     }
 
@@ -69,7 +71,8 @@ class ProductoController extends Controller
     {$proveedores = Proveedor::all();
         $producto = Producto::find($id);
         $categorias = Categoria::all();
-        return view('producto.edit', compact('producto','proveedores','categorias'));
+        $repuestos=Repuesto::all();
+        return view('producto.edit', compact('producto','proveedores','categorias','repuestos'));
     }
 
     /**
@@ -119,4 +122,15 @@ class ProductoController extends Controller
         Producto::find($id)->delete();
         return redirect()->route('producto.index')->with('success', 'Producto eliminado satisfactoriamente');
     }
+
+    public function addRepuestos(Request $request)
+{
+    $producto = Producto::find($request->producto_id);
+    if ($producto) {
+        $producto->repuestos()->syncWithoutDetaching($request->repuestos);
+        return response()->json(['success' => true]);
+    }
+    return response()->json(['success' => false]);
+}
+
 }

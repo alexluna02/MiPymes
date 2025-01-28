@@ -13,7 +13,7 @@ class Producto extends Model
 
     protected $fillable = [
         'nombre',
-        'descripcion',  
+        'descripcion',
         'proveedor_id',
         'categoria_id',
         'precio',
@@ -30,5 +30,9 @@ class Producto extends Model
     public function categoria()
     {
         return $this->belongsTo(Categoria::class, 'categoria_id', 'id');
+    }
+    public function repuestos()
+    {
+        return $this->belongsToMany(Repuesto::class, 'producto_repuesto', 'producto_id', 'repuesto_id');
     }
 }
