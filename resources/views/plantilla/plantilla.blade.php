@@ -49,6 +49,7 @@
         <nav class="menu">
             <ul>
             <li><a href="/index">Inicio</a></li>
+            <li><a href="/dashboard" >🏠 Dashboard</a></li>
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">📦 Productos</a>
                     <ul class="submenu">
@@ -104,7 +105,6 @@
                     <a href="#" onclick="toggleSubmenu(event)">🔧 Repuestos</a>
                     <ul class="submenu">
                         <li><a href="/repuesto">📋 Repuestos</a></li>
-                        <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
                     </ul>
                 </li>
 
@@ -115,7 +115,7 @@
 
     </aside>
 
-    <div class="container-fluid" style="margin-top: 50px">
+    <div class="container-fluid" style="margin-top: 100px">
 
         @yield('content')
     </div>

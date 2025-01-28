@@ -22,9 +22,9 @@
         <div class="row">
             <div class="btn-group">
                 <div class="redes-sociales">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="https://www.facebook.com/MaqAgroMultirepuestos" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
                     <a href="#" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
-                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
+                    <a href="https://w.app/maqagro" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
 
                     <form method="GET" action="{{ route('logout') }}">
                         @csrf
@@ -45,6 +45,8 @@
         <!-- Menú de Navegación -->
         <nav class="menu">
             <ul>
+                <li><a href="/index" >🏠 Inicio</a></li>
+
                 <li><a href="/dashboard" >🏠 Dashboard</a></li>
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">📦 Productos</a>
