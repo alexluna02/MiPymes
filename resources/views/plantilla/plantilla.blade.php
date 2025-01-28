@@ -14,10 +14,9 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-<<<<<<< HEAD
     <style>
         .dropdown-menu {
-            background-color: rgb(77, 152, 72);
+            background-color: rgb(70, 64, 64);
         }
 
         .dropdown-menu>.class-row {
@@ -63,8 +62,7 @@
                     <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('Recursos/candado.png') }}" alt="Configuraciones"
-                            style="margin-right: 10px; margin-left:0px"></button>
+                        <img src="{{ asset('Recursos/candado.png') }}" alt="Configuraciones" style="margin-right: 10px; margin-left:0px"></button>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="class-row"><a href="/index" class="dropdown-item">Perfil</a></div>

@@ -23,7 +23,7 @@ class Repuesto extends Model
     ];
 
     // Relación con la tabla de categorías (asumiendo que tienes un modelo Categoria)
-   /* public function categoria()
+    /* public function categoria()
     {
         return $this->belongsTo(Categoria::class);
     }
@@ -34,4 +34,3 @@ class Repuesto extends Model
         return $this->belongsToMany(Producto::class, 'producto_repuesto', 'repuesto_id', 'producto_id');
     }
 }
-
