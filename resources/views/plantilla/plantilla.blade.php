@@ -14,6 +14,7 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
+<<<<<<< HEAD
     <style>
         .dropdown-menu {
             background-color: rgb(77, 152, 72);

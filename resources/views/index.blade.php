@@ -32,7 +32,7 @@
                                 src="{{ asset('Recursos/candado.png') }}" alt="Foto 2"></button>
                     </form>
 
-                </div>
+        </div>
     </header>
 
     <!-- Barra Lateral -->
@@ -96,6 +96,14 @@
                         <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="#" onclick="toggleSubmenu(event)">🔧 Repuestos</a>
+                    <ul class="submenu">
+                        <li><a href="/repuesto">📋 Repuestos</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="#" onclick="toggleSubmenu(event)">👤 Perfil</a></li>
             </ul>
         </nav>
