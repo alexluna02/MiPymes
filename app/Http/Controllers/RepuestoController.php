@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Repuesto;
+use App\Models\Categoria;
+use App\Events\ModelUpdated;
 
 class RepuestoController extends Controller
 {
@@ -21,7 +23,8 @@ class RepuestoController extends Controller
      */
     public function create()
     {
-        return view('repuesto.create');
+        $categorias = Categoria::All();
+        return view('repuesto.create', compact('categorias'));
     }
 
     /**
@@ -61,7 +64,8 @@ class RepuestoController extends Controller
     public function edit(string $id)
     {
         $repuesto = Repuesto::find($id);
-        return view('repuesto.edit', compact('repuesto'));
+        $categorias = Categoria::All();
+        return view('repuesto.edit', compact('repuesto', 'categorias'));
     }
 
     /**
@@ -86,6 +90,8 @@ class RepuestoController extends Controller
             return redirect()->route('repuesto.index')->with('error', 'Repuesto no encontrado');
         }
 
+        $old_value = $repuesto->toArray();
+
         $repuesto->nombre = $request->input('nombre');
         $repuesto->descripcion = $request->input('descripcion');
         $repuesto->precio = $request->input('precio');
@@ -97,8 +103,13 @@ class RepuestoController extends Controller
 
         $repuesto->save();
 
+        $new_value = $repuesto->toArray();
+
+        event(new ModelUpdated($repuesto, $old_value, $new_value));
+
         return redirect()->route('repuesto.index')->with('success', 'Repuesto actualizado satisfactoriamente');
     }
+
 
     /**
      * Remove the specified resource from storage.

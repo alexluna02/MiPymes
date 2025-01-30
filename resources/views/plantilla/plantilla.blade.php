@@ -181,6 +181,28 @@
         .table {
             border-top: 2px solid #ccc;
         }
+/*
+        .text-container {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 200px;
+            
+        }*/
+        
+        .text-container {
+            max-width: 200px;
+            /* Ajusta el ancho máximo según sea necesario */
+            max-height: 100px;
+            /* Ajusta la altura máxima según sea necesario */
+            overflow: auto;
+            /* Añade barras de desplazamiento si es necesario */
+            white-space: pre-wrap;
+            /* Permite que el texto se divida en varias líneas */
+            word-wrap: break-word;
+            /* Permite que las palabras largas se dividan y se ajusten al contenedor */
+        }
+    </style>
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->

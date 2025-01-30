@@ -8,8 +8,9 @@ use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Metodo_pago;
 use App\Models\Parametro;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Events\ModelUpdated;
 
 class VentaController extends Controller
 {
@@ -124,6 +125,8 @@ class VentaController extends Controller
             'detalles.*.precio_unitario' => 'required|numeric|min:0',
             'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
+        $venta = Venta::findOrFail($id);
+            $old_value = $venta->toArray();
 
         DB::transaction(function () use ($request, $id) {
             $venta = Venta::findOrFail($id);
@@ -153,6 +156,10 @@ class VentaController extends Controller
                 }
             }
         });
+        
+        $new_value = $venta->toArray();
+
+        event(new ModelUpdated($venta, $old_value, $new_value));
 
         return redirect()->route('venta.index')->with('success', 'Venta actualizada con éxito');
     }
