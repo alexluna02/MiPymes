@@ -84,5 +84,7 @@ Route::group(['middleware' => ['auth']], function () {});
 
 Route::get('/activity_log', [Activity_logController::class, 'index'])->middleware(Authenticate::class . ':admin');
 
-Route::post('/add-repuestos', [ProductoController::class, 'addRepuestos'])->name('add-repuestos');
+//Route::post('/add-repuestos', [ProductoController::class, 'addRepuestos'])->name('add-repuestos');
 
+Route::post('/add-repuestos', [ProductoController::class, 'addRepuestos'])->name('producto.addRepuestos');
+Route::delete('/remove-repuesto', [ProductoController::class, 'removeRepuesto'])->name('producto.removeRepuesto');

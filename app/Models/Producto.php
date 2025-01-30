@@ -19,7 +19,6 @@ class Producto extends Model
         'precio',
         'cantidad_stock',
         'marca',
-        'modelo',
         'año_fabricacion'
     ];
     public function proveedor()

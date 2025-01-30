@@ -77,8 +77,6 @@ class VentaController extends Controller
                 'precio_unitario' => $detalle['precio_unitario'],
                 'subtotal' => $detalle['subtotal'],
                 'descuento' => $detalle['descuento'],
-                //'impuesto' => $detalle['subtotal'],
-                //'descuento' => 50,
                 'impuesto' => $detalle['iva'],
                 'total_linea' => $detalle['subtotal'] + ($detalle['subtotal'] * $detalle['iva']),
             ]);

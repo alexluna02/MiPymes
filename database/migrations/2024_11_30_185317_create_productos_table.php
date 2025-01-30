@@ -23,8 +23,7 @@ class CreateProductosTable extends Migration
             $table->unsignedBigInteger('categoria_id')->nullable(); // Relación con categorias
             $table->decimal('precio', 8, 2);  
             $table->integer('cantidad_stock');
-            $table->string('marca');      
-            $table->string('modelo');     
+            $table->string('marca');       
             $table->integer('año_fabricacion');  
             $table->timestamps();
 

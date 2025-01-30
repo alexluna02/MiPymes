@@ -24,7 +24,6 @@
                                     <th>Cantidad en Stock</th>
                                     <th>Categoría</th>
                                     <th>Marca</th>
-                                    <th>Modelo</th>
                                     <th>Año de Fabricación</th>
                                     <th>Repuestos</th>
                                     <th>Editar</th>
@@ -43,7 +42,6 @@
                                                 <td>{{ $producto->cantidad_stock }}</td>
                                                 <td>{{ $producto->categoria->nombre }}</td>
                                                 <td>{{ $producto->marca }}</td>
-                                                <td>{{ $producto->modelo }}</td>
                                                 <td>{{ $producto->año_fabricacion }}</td>
                                                 <td>
                                                     @if ($producto->repuestos->isNotEmpty())

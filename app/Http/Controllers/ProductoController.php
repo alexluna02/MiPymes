@@ -88,7 +88,6 @@ class ProductoController extends Controller
             'precio' => 'required|numeric',
             'cantidad_stock' => 'required|integer',
             'marca' => 'required',
-            'modelo' => 'required',
             'año_fabricacion' => 'required|integer',
         ]);
 
@@ -106,7 +105,6 @@ class ProductoController extends Controller
         $producto->precio = $request->input('precio');
         $producto->cantidad_stock = $request->input('cantidad_stock');
         $producto->marca = $request->input('marca');
-        $producto->modelo = $request->input('modelo');
         $producto->año_fabricacion = $request->input('año_fabricacion');
 
         $producto->save();
@@ -124,13 +122,31 @@ class ProductoController extends Controller
     }
 
     public function addRepuestos(Request $request)
-{
-    $producto = Producto::find($request->producto_id);
-    if ($producto) {
+    {
+        $producto = Producto::find($request->producto_id);
+    
+        if (!$producto) {
+            return response()->json(['success' => false, 'message' => 'Producto no encontrado']);
+        }
+    
         $producto->repuestos()->syncWithoutDetaching($request->repuestos);
-        return response()->json(['success' => true]);
+    
+        return response()->json(['success' => true, 'message' => 'Repuestos añadidos correctamente']);
     }
-    return response()->json(['success' => false]);
-}
+    
+    public function removeRepuesto(Request $request)
+    {
+        $producto = Producto::find($request->producto_id);
+    
+        if (!$producto) {
+            return response()->json(['success' => false, 'message' => 'Producto no encontrado']);
+        }
+    
+        $producto->repuestos()->detach($request->repuesto_id);
+    
+        return response()->json(['success' => true, 'message' => 'Repuesto eliminado correctamente']);
+    }
+     
+
 
 }
