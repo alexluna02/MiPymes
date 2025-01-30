@@ -8,6 +8,7 @@ use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Metodo_pago;
 use App\Models\Parametro;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Events\ModelUpdated;
 
