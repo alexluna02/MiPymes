@@ -104,7 +104,7 @@ class ProductoController extends Controller
             return redirect()->route('producto.index')->with('error', 'Producto no encontrado');
         }
 
-        $old_value = $producto->toArray();
+        $old_value = $producto->only(['nombre','descripcion','proveedor_id','categoria_id','precio','cantidad_stock','marca','año_fabricacion']);
 
         $producto->nombre = $request->input('nombre');
         $producto->descripcion = $request->input('descripcion');
@@ -117,7 +117,7 @@ class ProductoController extends Controller
 
         $producto->save();
 
-        $new_value = $producto->toArray();
+        $new_value = $producto->only(['nombre','descripcion','proveedor_id','categoria_id','precio','cantidad_stock','marca','año_fabricacion']);
 
         event(new ModelUpdated($producto, $old_value, $new_value));
 

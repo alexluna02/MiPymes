@@ -103,11 +103,11 @@ class ParametroController extends Controller
             return redirect()->route('parametro.index')->with('error', 'Parámetro no encontrado');
         }
 
-        $old_value = $parametro->toArray();
+        $old_value = $parametro->only(['nombre', 'valor','descripcion','tipo','estado']);
 
         $parametro->update($request->all());
 
-        $new_value = $parametro->toArray();
+        $new_value = $parametro->only(['nombre', 'valor','descripcion','tipo','estado']);
 
         event(new ModelUpdated($parametro, $old_value, $new_value));
 

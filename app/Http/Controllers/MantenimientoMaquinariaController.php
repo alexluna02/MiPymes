@@ -87,11 +87,11 @@ class MantenimientoMaquinariaController extends Controller
             return redirect()->route('mantenimientomaquinaria.index')->with('error', 'Registro no encontrado');
         }
 
-        $old_value = $mantenimiento->toArray();
+        $old_value = $mantenimiento->only(['venta_id','producto_id','fecha_mantenimiento','tipo_mantenimiento','descripcion','costo','estado_post_mantenimiento']);
 
         $mantenimiento->update($request->all());
 
-        $new_value = $mantenimiento->toArray();
+        $new_value = $mantenimiento->only(['venta_id','producto_id','fecha_mantenimiento','tipo_mantenimiento','descripcion','costo','estado_post_mantenimiento']);
 
         event(new ModelUpdated($mantenimiento, $old_value, $new_value));
 

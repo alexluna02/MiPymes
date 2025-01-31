@@ -23,12 +23,13 @@ class LogModelDeleted
      */
     public function handle(ModelDeleted $event)
     {
+        $parts = explode('\\', get_class($event->model));
         DB::table('activity_log')->insert([
             'user_id' => Auth::id(),
             'action' => 'deleted',
-            'model' => get_class($event->model),
+            'model' => end($parts),
             'model_id' => $event->model->id,
-            'created_at'=>now()->timezone('America/Lima'),
+            'created_at' => now()->timezone('America/Lima'),
         ]);
     }
 }

@@ -111,7 +111,7 @@ class Detalle_ventaController extends Controller
             return redirect()->route('detalle_venta.index')->with('error', 'Detalle de venta no encontrado');
         }
 
-        $old_value = $detalle->toArray();
+        $old_value = $detalle->only(['venta_id','producto_id','cantidad','precio_unitario','descuento','impuesto']);
 
         $cantidad = $request->input('cantidad');
         $precio_unitario = $request->input('precio_unitario');
@@ -136,7 +136,7 @@ class Detalle_ventaController extends Controller
 
         $detalle->save();
 
-        $new_value = $detalle->toArray();
+        $new_value = $detalle->only(['venta_id','producto_id','cantidad','precio_unitario','descuento','impuesto']);
 
         event(new ModelUpdated($detalle, $old_value, $new_value));
 

@@ -69,14 +69,14 @@ class Metodo_pagoController extends Controller
             return redirect()->route('metodo_pago.index')->with('error', 'Método de pago no encontrado');
         }
 
-        $old_value = $metodo->toArray();
+        $old_value = $metodo->only(['metodo','descripcion']);
 
         $metodo->metodo = $request->input('metodo');
         $metodo->descripcion = $request->input('descripcion');
 
         $metodo->save();
 
-        $new_value = $metodo->toArray();
+        $new_value = $metodo->only(['metodo','descripcion']);
 
         event(new ModelUpdated($metodo, $old_value, $new_value));
 

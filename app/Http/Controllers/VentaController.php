@@ -126,7 +126,7 @@ class VentaController extends Controller
             'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
         $venta = Venta::findOrFail($id);
-            $old_value = $venta->toArray();
+            $old_value = $venta->only(['cod_factura','cliente_id','total','metodo_pago_id']);
 
         DB::transaction(function () use ($request, $id) {
             $venta = Venta::findOrFail($id);
@@ -144,6 +144,7 @@ class VentaController extends Controller
                 $subtotal = $detalle['cantidad'] * $detalle['precio_unitario'];
                 $total_linea = $subtotal + ($subtotal * $detalle['iva'] / 100); // Si tienes IVA
                 if ($detalleVenta) {
+                    $old_value = $detalleVenta->only(['venta_id','producto_id','cantidad','precio_unitario','subtotal','descuento','impuesto','total_linea']);
                     $detalleVenta->update([
                         'producto_id' => $detalle['producto_id'],
                         'cantidad' => $detalle['cantidad'],
@@ -153,11 +154,13 @@ class VentaController extends Controller
                         'impuesto' => $detalle['iva'],
 
                     ]);
+                    $new_value=$detalleVenta->only(['venta_id','producto_id','cantidad','precio_unitario','subtotal','descuento','impuesto','total_linea']);
+                    event(new ModelUpdated($detalleVenta, $old_value, $new_value));
                 }
             }
         });
         
-        $new_value = $venta->toArray();
+        $new_value = $venta->only(['cod_factura','cliente_id','total','metodo_pago_id']);;
 
         event(new ModelUpdated($venta, $old_value, $new_value));
 

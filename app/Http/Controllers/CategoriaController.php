@@ -86,11 +86,11 @@ class CategoriaController extends Controller
             return redirect()->route('categoria.index')->with('error', 'Categoría no encontrada');
         }
 
-        $old_value = $categoria->toArray();
+        $old_value = $categoria->only(['nombre','descripcion']);
 
         $categoria->update($request->all());
 
-        $new_value = $categoria->toArray();
+        $new_value = $categoria->only(['nombre','descripcion']);
 
         event(new ModelUpdated($categoria, $old_value, $new_value));
 

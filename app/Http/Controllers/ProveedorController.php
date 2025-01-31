@@ -68,7 +68,7 @@ class ProveedorController extends Controller
             return redirect()->route('proveedor.index')->with('error', 'Proveedor no encontrado');
         }
 
-        $old_value = $proveedor->toArray();
+        $old_value = $proveedor->only(['nombre','telefono','email','direccion']);
 
         $request->validate([
             'nombre' => 'required',
@@ -83,7 +83,7 @@ class ProveedorController extends Controller
         $proveedor->email = $request->input('email');
         $proveedor->save();
 
-        $new_value = $proveedor->toArray();
+        $new_value = $proveedor->only(['nombre','telefono','email','direccion']);
         event(new ModelUpdated($proveedor, $old_value, $new_value));
 
         return redirect()->route('proveedor.index')->with('success', 'Proveedor actualizado satisfactoriamente');

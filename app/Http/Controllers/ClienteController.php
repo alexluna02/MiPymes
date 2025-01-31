@@ -84,7 +84,7 @@ class ClienteController extends Controller
         }
     
 
-        $old_value = $cliente->toArray();
+        $old_value = $cliente->only(['nombre','cedula','email','direccion','telefono']);
 
         $cliente->nombre = $request->input('nombre');
         $cliente->cedula = $request->input('cedula');
@@ -94,7 +94,7 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        $new_value = $cliente->toArray();
+        $new_value = $cliente->only(['nombre','cedula','email','direccion','telefono']);
 
         event(new ModelUpdated($cliente, $old_value, $new_value));
 

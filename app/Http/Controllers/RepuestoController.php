@@ -90,7 +90,7 @@ class RepuestoController extends Controller
             return redirect()->route('repuesto.index')->with('error', 'Repuesto no encontrado');
         }
 
-        $old_value = $repuesto->toArray();
+        $old_value = $repuesto->only(['nombre','descripcion','precio','cantidad_stock','categoria_id','marca','modelo','año_fabricacion']);
 
         $repuesto->nombre = $request->input('nombre');
         $repuesto->descripcion = $request->input('descripcion');
@@ -103,7 +103,7 @@ class RepuestoController extends Controller
 
         $repuesto->save();
 
-        $new_value = $repuesto->toArray();
+        $new_value = $repuesto->only(['nombre','descripcion','precio','cantidad_stock','categoria_id','marca','modelo','año_fabricacion']);
 
         event(new ModelUpdated($repuesto, $old_value, $new_value));
 
