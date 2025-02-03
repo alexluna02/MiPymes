@@ -7,10 +7,8 @@ use App\Models\Detalle_venta;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Metodo_pago;
-use App\Models\Parametro;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Events\ModelUpdated;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -18,7 +16,7 @@ class VentaController extends Controller
     {
         $metodoPago = Metodo_pago::all();
         $ventas = Venta::orderBy('id', 'DESC')->paginate(10);
-        return view('venta.index', compact('ventas', 'metodoPago'));
+        return view('venta.index', compact('ventas','metodoPago'));
     }
 
     public function create()
@@ -27,14 +25,7 @@ class VentaController extends Controller
         $clientes = Cliente::all();
         $metodosPago = Metodo_pago::all();
         $productos = Producto::all();
-        $iva = Parametro::where('tipo', 'impuesto')->where('estado', true)->first();
-
-        if (!$iva) {
-            // Lanzar un error controlado si no existe un IVA activo
-            session()->flash('error', 'No se encontró un IVA activo. Verifique los parámetros.');
-            return back();
-        }
-        return view('venta.create', compact('clientes', 'metodosPago', 'productos', 'ventas', 'iva'));
+        return view('venta.create', compact('clientes', 'metodosPago', 'productos', 'ventas'));
     }
 
     public function store(Request $request)
@@ -45,7 +36,9 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
-
+            'estado' => 'required|string',
+            'fecha_entrega' => 'required|date',
+            'direccion_entrega' => 'required|string',
             'comentarios' => 'nullable|string',
             'detalles' => 'required|array',
             'detalles.*.producto_id' => 'required|exists:productos,id',
@@ -66,6 +59,7 @@ class VentaController extends Controller
             'metodo_pago_id',
             'estado',
             'fecha_entrega',
+            'direccion_entrega',
             'comentarios'
         ]));
 
@@ -78,8 +72,10 @@ class VentaController extends Controller
                 'precio_unitario' => $detalle['precio_unitario'],
                 'subtotal' => $detalle['subtotal'],
                 'descuento' => $detalle['descuento'],
-                'impuesto' => $detalle['iva'],
-                'total_linea' => $detalle['subtotal'] + ($detalle['subtotal'] * $detalle['iva']),
+                //'impuesto' => $detalle['subtotal'],
+                //'descuento' => 50,
+                'impuesto' => 0.15,
+                'total_linea' => $detalle['subtotal']+($detalle['subtotal'] * 0.15),
             ]);
         }
 
@@ -88,6 +84,7 @@ class VentaController extends Controller
 
         return redirect()->route('venta.index')->with('success', 'Venta registrada con éxito');
     }
+
 
     public function show($id)
     {
@@ -100,16 +97,9 @@ class VentaController extends Controller
         $venta = Venta::findOrFail($id);
         $clientes = Cliente::all();
         $metodosPago = Metodo_pago::all();
-        $detalles = $venta->detalles; // Esto recupera solo los detalles de la venta específica
-        $productos = Producto::all();
-        $iva = Parametro::where('tipo', 'impuesto')->where('estado', true)->first();
 
-        if (!$iva) {
-            // Lanzar un error controlado si no existe un IVA activo
-            session()->flash('error', 'No se encontró un IVA activo. Verifique los parámetros.');
-            return back();
-        }
-        return view('venta.edit', compact('venta', 'clientes', 'metodosPago', 'productos', 'detalles', 'iva'));
+        $productos = Producto::all();
+        return view('venta.edit', compact('venta', 'clientes', 'metodosPago','productos'));
     }
 
     public function update(Request $request, $id)
@@ -119,14 +109,19 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
+            'estado' => 'required|string',
+            'fecha_entrega' => 'required|date',
+            'direccion_entrega' => 'required|string',
+            'comentarios' => 'nullable|string',
             'detalles' => 'required|array',
             'detalles.*.producto_id' => 'required|exists:productos,id',
             'detalles.*.cantidad' => 'required|numeric|min:1',
             'detalles.*.precio_unitario' => 'required|numeric|min:0',
             'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
+
         $venta = Venta::findOrFail($id);
-            $old_value = $venta->only(['cod_factura','cliente_id','total','metodo_pago_id']);
+            $old_value = $venta->toArray();
 
         DB::transaction(function () use ($request, $id) {
             $venta = Venta::findOrFail($id);
@@ -144,7 +139,6 @@ class VentaController extends Controller
                 $subtotal = $detalle['cantidad'] * $detalle['precio_unitario'];
                 $total_linea = $subtotal + ($subtotal * $detalle['iva'] / 100); // Si tienes IVA
                 if ($detalleVenta) {
-                    $old_value = $detalleVenta->only(['venta_id','producto_id','cantidad','precio_unitario','subtotal','descuento','impuesto','total_linea']);
                     $detalleVenta->update([
                         'producto_id' => $detalle['producto_id'],
                         'cantidad' => $detalle['cantidad'],
@@ -154,13 +148,11 @@ class VentaController extends Controller
                         'impuesto' => $detalle['iva'],
 
                     ]);
-                    $new_value=$detalleVenta->only(['venta_id','producto_id','cantidad','precio_unitario','subtotal','descuento','impuesto','total_linea']);
-                    event(new ModelUpdated($detalleVenta, $old_value, $new_value));
                 }
             }
         });
         
-        $new_value = $venta->only(['cod_factura','cliente_id','total','metodo_pago_id']);;
+        $new_value = $venta->toArray();
 
         event(new ModelUpdated($venta, $old_value, $new_value));
 

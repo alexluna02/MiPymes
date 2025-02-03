@@ -1,6 +1,18 @@
 @extends('plantilla.plantilla')
 
 @section('content')
+@if ($errors->any())
+<div class="col-md-8 col-md-offset-2">
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+</div>
+@endif
+
 <div class="container-fluid" style="margin-left: 260px; border: 1px solid grey; background-color:white; padding:40px; border-radius:10px">
     <div class="row">
         <div class="col-12">
