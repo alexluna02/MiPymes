@@ -32,18 +32,31 @@ class ClienteController extends Controller
 {
     $request->validate([
         'nombre' => 'required',
-        'cedula' => 'required',
+        'cedula' => 'required',  
         'direccion' => 'required',
         'telefono' => 'required',
-        'email' => 'required',
+        'email' => 'required|email',
+    ], [
+        
+        'cedula.required' => 'La cédula es obligatoria.',
+       
         
     ]);
 
-        // Crear el nuevo cliente
+    try {
+        
         Cliente::create($request->all());
 
         return redirect()->route('cliente.index')->with('success', 'Registro creado satisfactoriamente');
+    } catch (\Illuminate\Database\QueryException $e) {
+        if ($e->getCode() === 'P0001') {  
+            return redirect()->back()->withErrors(['cedula' => 'Cedula Incorrecta o ya registrada']);
+        }
+
+        return redirect()->back()->withErrors(['error' => 'Ha ocurrido un error inesperado.']);
     }
+}
+
 
 
     /**

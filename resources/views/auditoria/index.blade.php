@@ -12,6 +12,7 @@
                             <table id="mytable" class="table table-bordred table-striped">
                                 <thead>
                                     <th>ID Usuario</th>
+                                    <th>Nombre Usuario</th>
                                     <th>Acción</th>
                                     <th>Model</th>
                                     <th>Model ID</th>
@@ -23,7 +24,8 @@
                                     @if ($activityLogs->count())
                                         @foreach ($activityLogs as $log)
                                             <tr>
-                                                <td>{{ $log->user_id }}</td>
+                                            <td>{{ $log->user_id  }}</td>
+                                                <td>{{ App\Models\User::find( $log->user_id)->name}}</td>
                                                 <td>{{ $log->action }}</td>
                                                 <td>{{ $log->model }}</td>
                                                 <td>{{ $log->model_id }}</td>

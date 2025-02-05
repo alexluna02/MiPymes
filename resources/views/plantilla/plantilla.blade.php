@@ -177,7 +177,7 @@
                     <a href="/activity_log">Auditoría</a>
                 </li>
                 @endrole
-                <li><a href="#" onclick="toggleSubmenu(event)">👤 Perfil</a></li>
+                <li><a href="/acerca" >👤 Sobre Nosotros</a></li>
             </ul>
         </nav>
 

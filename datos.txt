@@ -1,9 +1,9 @@
 -- Tabla: parametros
 INSERT INTO public.parametros(
-	 nombre, valor, descripcion, tipo,estado, created_at, updated_at)
+	 nombre, valor, descripcion, tipo, estado, created_at, updated_at)
 VALUES
-	( 'IVA', '12', 'Impuesto al Valor Agregado', 'impuesto',true, '2025-01-22', '2025-01-22'),
-	( 'Descuento_general', '5', 'Descuento estándar para clientes frecuentes', 'descuento',true, '2025-01-22', '2025-01-22');
+	( 'IVA', 12, 'Impuesto al Valor Agregado', 'impuesto', true, '2025-01-22', '2025-01-22'),
+	( 'Descuento_general', 5, 'Descuento estándar para clientes frecuentes', 'descuento', true, '2025-01-22', '2025-01-22');
 
 -- Tabla: proveedores
 INSERT INTO public.proveedores(
@@ -11,7 +11,7 @@ INSERT INTO public.proveedores(
 VALUES
 	( 'AgroProveedores SA', 'Av. Central 123', '0987654321', 'contacto@agropro.com', '2025-01-20'),
 	( 'CampoFert', 'Calle del Campo 456', '0998765432', 'ventas@campofert.com', '2025-01-21');
-
+select * from productos;
 -- Tabla: categorias
 INSERT INTO public.categorias(
 	nombre, descripcion, created_at, updated_at)
@@ -19,58 +19,63 @@ VALUES
 	( 'Maquinaria', 'Equipos agrícolas como tractores, bombas', '2025-01-20', '2025-01-20'),
 	( 'Repuestos', 'Piezas de recambio para maquinaria agrícola', '2025-01-20', '2025-01-20');
 
+SELECT * FROM proveedores;
+
 -- Tabla: productos
 INSERT INTO public.productos(
-	 nombre, descripcion, proveedor_id, categoria_id, precio, cantidad_stock, marca, modelo, "año_fabricacion", created_at, updated_at)
+    nombre, descripcion, proveedor_id, categoria_id, precio, cantidad_stock, marca, "año_fabricacion", created_at, updated_at)
 VALUES
-	( 'Bomba de fumigación 20L', 'Bomba manual para fumigación agrícola', 1, 1, 120.50, 50, 'AgroTools', 'BF-20L', 2023, '2025-01-20', '2025-01-20'),
-	( 'Tractor Compacto', 'Tractor ideal para pequeñas parcelas', 2, 1, 7500.00, 10, 'TractoAgro', 'TC-100', 2022, '2025-01-21', '2025-01-21');
+    ('Bomba de fumigación 20L', 'Bomba manual para fumigación agrícola', 3, 3, 120.50, 50, 'AgroTools', 2023, '2025-01-20', '2025-01-20'),
+    ('Tractor Compacto', 'Tractor ideal para pequeñas parcelas', 4, 4, 7500.00, 10, 'TractoAgro', 2022, '2025-01-21', '2025-01-21');
 
 -- Tabla: repuestos
 INSERT INTO public.repuestos(
-	 nombre, descripcion, precio, cantidad_stock, categoria_id, marca, "año_fabricacion", created_at, updated_at)
+	nombre, descripcion, precio, cantidad_stock, categoria_id, marca, modelo, "año_fabricacion", created_at, updated_at)
 VALUES
-	( 'Filtro de aceite', 'Filtro para tractores compactos', 15.00, 100, 2, 'FO-100', 2023, '2025-01-22', '2025-01-22'),
-	( 'Boquilla de repuesto', 'Boquilla para bomba de fumigación', 5.00, 200, 2,  'BR-20', 2023, '2025-01-22', '2025-01-22');
-
+	( 'Filtro de aceite', 'Filtro para tractores compactos', 15.00, 100, 2, 'TractoAgro', 'FO-100', 2023, '2025-01-22', '2025-01-22'),
+	( 'Boquilla de repuesto', 'Boquilla para bomba de fumigación', 5.00, 200, 2, 'AgroTools', 'BR-20', 2023, '2025-01-22', '2025-01-22');
+select * from repuestos;
 -- Tabla: producto_repuesto
 INSERT INTO public.producto_repuesto(
 	producto_id, repuesto_id, created_at, updated_at)
 VALUES
-	(1, 2, '2025-01-22', '2025-01-22'),
-	(2, 1, '2025-01-22', '2025-01-22');
+	(3, 2, '2025-01-22', '2025-01-22'),
+	(4, 1, '2025-01-22', '2025-01-22');
 
 -- Tabla: clientes
 INSERT INTO public.clientes(
-	 nombre, cedula, direccion, telefono, email, created_at, updated_at)
+	nombre, cedula, direccion, telefono, email, created_at, updated_at)
 VALUES
 	( 'Juan Perez', '1004657981', 'Granja La Esperanza', '0981122334', 'juan.perez@gmail.com', '2025-01-22', '2025-01-22'),
 	( 'Maria López', '0406189437', 'Finca El Progreso', '0989988776', 'maria.lopez@gmail.com', '2025-01-22', '2025-01-22');
 
 -- Tabla: metodo_pago
 INSERT INTO public.metodo_pago(
-	 metodo, descripcion, created_at, updated_at)
+	metodo, descripcion, created_at, updated_at)
 VALUES
 	('Efectivo', 'Pago en efectivo', '2025-01-22', '2025-01-22'),
-	( 'Transferencia', 'Pago mediante transferencia bancaria', '2025-01-22', '2025-01-22');
+	('Transferencia', 'Pago mediante transferencia bancaria', '2025-01-22', '2025-01-22');
 
+select * from metodo_pago;
 
---Tabla: Ventas
+select * from clientes;
+-- Tabla: ventas
 INSERT INTO public.ventas(
-     cliente_id, cod_factura, fecha_venta, total, metodo_pago_id,comentarios, created_at, updated_at)
+	cliente_id, cod_factura, fecha_venta, total, metodo_pago_id, comentarios, created_at, updated_at)
 VALUES 
-    ( 1, 'F001', '2025-01-22', 150.00, 1, 'Primera venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00'),
-    ( 2, 'F002', '2025-01-22', 200.00, 2,'Segunda venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00');
-
+	(1, 'F001', '2025-01-22', 150.00, 1, 'Primera venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00'),
+	(2, 'F002', '2025-01-22', 200.00, 2, 'Segunda venta', '2025-01-22 00:00:00', '2025-01-22 00:00:00');
+select * from productos;
 -- Tabla: detalle_venta
 INSERT INTO public.detalle_venta(
 	venta_id, producto_id, cantidad, precio_unitario, subtotal, descuento, impuesto, total_linea, created_at, updated_at)
 VALUES
-	( 1, 2,5, 120.50, 241.00, 5.00, 15, 264.92, '2025-01-22', '2025-01-22'),
-	( 2, 1,5, 120.50, 241.00, 5.00, 15, 264.92, '2025-01-22', '2025-01-22');
+	(5, 3, 5, 120.50, 602.50, 30.13, 72.30, 644.67, '2025-01-22', '2025-01-22'),
+	(6, 4, 5, 120.50, 602.50, 30.13, 72.30, 644.67, '2025-01-22', '2025-01-22');
 
 -- Tabla: mantenimiento_maquinaria
 INSERT INTO public.mantenimiento_maquinaria(
-	 producto_id, venta_id, fecha_mantenimiento, tipo_mantenimiento, descripcion, costo, estado_post_mantenimiento, created_at, updated_at)
+	producto_id, venta_id, fecha_mantenimiento, tipo_mantenimiento, descripcion, costo, estado_post_mantenimiento, created_at, updated_at)
 VALUES
-	( 2, 1, '2025-01-23', 'Preventivo', 'Cambio de aceite y revisión general', 200.00, 'Funcionando', '2025-01-23', '2025-01-23');
+	(3, 5, '2025-01-23', 'Preventivo', 'Cambio de aceite y revisión general', 200.00, 'Funcionando', '2025-01-23', '2025-01-23');
+

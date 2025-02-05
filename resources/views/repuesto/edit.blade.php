@@ -65,7 +65,7 @@
                                         <div class="form-group">
     
                                             <select name="categoria_id" class="form-control input-sm" required>
-                                                {{ $repuesto->categoria->nombre }}
+                                            <td>{{ optional($repuesto->categoria)->nombre ?? 'Sin categoría' }}</td> 
                                                 @foreach($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
                                                 @endforeach

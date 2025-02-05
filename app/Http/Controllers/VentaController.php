@@ -7,8 +7,10 @@ use App\Models\Detalle_venta;
 use App\Models\Cliente;
 use App\Models\Producto;
 use App\Models\Metodo_pago;
+use App\Models\Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Events\ModelUpdated;
 
 class VentaController extends Controller
 {
@@ -25,7 +27,9 @@ class VentaController extends Controller
         $clientes = Cliente::all();
         $metodosPago = Metodo_pago::all();
         $productos = Producto::all();
-        return view('venta.create', compact('clientes', 'metodosPago', 'productos', 'ventas'));
+        $iva = Parametro::where('estado', true)->where('nombre', 'IVA')->first();
+
+        return view('venta.create', compact('iva','clientes', 'metodosPago', 'productos', 'ventas'));
     }
 
     public function store(Request $request)
@@ -36,9 +40,6 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
-            'estado' => 'required|string',
-            'fecha_entrega' => 'required|date',
-            'direccion_entrega' => 'required|string',
             'comentarios' => 'nullable|string',
             'detalles' => 'required|array',
             'detalles.*.producto_id' => 'required|exists:productos,id',
@@ -46,44 +47,60 @@ class VentaController extends Controller
             'detalles.*.precio_unitario' => 'required|numeric|min:0',
             'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
-
-        // Iniciar una transacción de base de datos
-
-
-
-        // Crear la venta
-        $venta = Venta::create($request->only([
-            'cod_factura',
-            'cliente_id',
-            'total',
-            'metodo_pago_id',
-            'estado',
-            'fecha_entrega',
-            'direccion_entrega',
-            'comentarios'
-        ]));
-
-        // Guardar los detalles de la venta
-        foreach ($request->input('detalles') as $detalle) {
-            Detalle_venta::create([
-                'venta_id' => $venta->id,
-                'producto_id' => $detalle['producto_id'],
-                'cantidad' => $detalle['cantidad'],
-                'precio_unitario' => $detalle['precio_unitario'],
-                'subtotal' => $detalle['subtotal'],
-                'descuento' => $detalle['descuento'],
-                //'impuesto' => $detalle['subtotal'],
-                //'descuento' => 50,
-                'impuesto' => 0.15,
-                'total_linea' => $detalle['subtotal']+($detalle['subtotal'] * 0.15),
-            ]);
+    
+        try {
+            // Iniciar una transacción de base de datos
+            DB::beginTransaction();
+    
+            // Crear la venta
+            $venta = Venta::create($request->only([
+                'cod_factura',
+                'cliente_id',
+                'total',
+                'metodo_pago_id',
+                'estado',
+                'fecha_entrega',
+                'direccion_entrega',
+                'comentarios'
+            ]));
+    
+            // Guardar los detalles de la venta
+            foreach ($request->input('detalles') as $detalle) {
+                Detalle_venta::create([
+                    'venta_id' => $venta->id,
+                    'producto_id' => $detalle['producto_id'],
+                    'cantidad' => $detalle['cantidad'],
+                    'precio_unitario' => $detalle['precio_unitario'],
+                    'subtotal' => $detalle['subtotal'],
+                    'descuento' => $detalle['descuento'],
+                    'impuesto' => 0.15,
+                    'total_linea' => $detalle['subtotal'] + ($detalle['subtotal'] * 0.15),
+                ]);
+            }
+    
+            // Confirmar la transacción
+            DB::commit();
+    
+            return redirect()->route('venta.index')->with('success', 'Venta registrada con éxito');
+    
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Revertir la transacción en caso de error
+            DB::rollBack();
+    
+            // Verificar si el error proviene de un trigger
+            if ($e->getCode() === 'P0001') { // Código de error para excepciones RAISE en PostgreSQL
+                return redirect()->back()->withErrors(['No hay suficiente cantidad en el stock']);
+            }
+    
+            // Otros errores de la base de datos
+            return redirect()->back()->withErrors(['error' => 'Error al registrar la venta: ' . $e->getMessage()]);
+        } catch (\Exception $e) {
+            // Manejo de otros errores
+            DB::rollBack();
+            return redirect()->back()->withErrors(['error' => 'Error inesperado: ' . $e->getMessage()]);
         }
-
-        // Confirmar la transacción
-        //Venta::create($request->all());
-
-        return redirect()->route('venta.index')->with('success', 'Venta registrada con éxito');
     }
+    
 
 
     public function show($id)
@@ -109,9 +126,6 @@ class VentaController extends Controller
             'cliente_id' => 'required|exists:clientes,id',
             'total' => 'required|numeric',
             'metodo_pago_id' => 'required|exists:metodo_pago,id',
-            'estado' => 'required|string',
-            'fecha_entrega' => 'required|date',
-            'direccion_entrega' => 'required|string',
             'comentarios' => 'nullable|string',
             'detalles' => 'required|array',
             'detalles.*.producto_id' => 'required|exists:productos,id',
@@ -119,6 +133,9 @@ class VentaController extends Controller
             'detalles.*.precio_unitario' => 'required|numeric|min:0',
             'detalles.*.subtotal' => 'required|numeric|min:0',
         ]);
+
+
+        try {
 
         $venta = Venta::findOrFail($id);
             $old_value = $venta->toArray();
@@ -152,11 +169,30 @@ class VentaController extends Controller
             }
         });
         
+        
         $new_value = $venta->toArray();
 
         event(new ModelUpdated($venta, $old_value, $new_value));
 
         return redirect()->route('venta.index')->with('success', 'Venta actualizada con éxito');
+
+    } catch (\Illuminate\Database\QueryException $e) {
+        // Revertir la transacción en caso de error
+        DB::rollBack();
+
+        // Verificar si el error proviene de un trigger
+        if ($e->getCode() === 'P0001') { // Código de error para excepciones RAISE en PostgreSQL
+            return redirect()->back()->withErrors(['No hay suficiente cantidad en el stock']);
+        }
+
+        // Otros errores de la base de datos
+        return redirect()->back()->withErrors(['error' => 'Error al registrar la venta: ' . $e->getMessage()]);
+    } catch (\Exception $e) {
+        // Manejo de otros errores
+        DB::rollBack();
+        return redirect()->back()->withErrors(['error' => 'Error inesperado: ' . $e->getMessage()]);
+    }
+        
     }
 
     public function destroy($id)

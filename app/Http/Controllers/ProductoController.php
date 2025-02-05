@@ -50,7 +50,6 @@ class ProductoController extends Controller
             'precio' => 'required|numeric',
             'cantidad_stock' => 'required|integer',
             'marca' => 'required',
-            'modelo' => 'required',
             'año_fabricacion' => 'required|integer',
         ]);
 
