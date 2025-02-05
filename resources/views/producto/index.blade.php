@@ -9,11 +9,13 @@
                         <div class="pull-left">
                             <h3>Lista de Productos</h3>
                         </div>
+                        @role('admin')
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="{{ route('producto.create') }}" class="btn btn-info">Añadir Producto</a>
                             </div>
                         </div>
+                        @endrole
                         <div class="table-container">
                             <table id="mytable" class="table table-bordred table-striped">
                                 <thead>
@@ -26,8 +28,10 @@
                                     <th>Marca</th>
                                     <th>Año de Fabricación</th>
                                     <th>Repuestos</th>
+                                    @role('admin')
                                     <th>Editar</th>
                                     <th>Eliminar</th>
+                                    @endrole
                                 </thead>
                                 <tbody>
                                     @if ($productos->count())
@@ -50,6 +54,7 @@
                                                         No hay repuestos asociados.
                                                     @endif
                                                 </td>
+                                                @role('admin')
                                                 <td>
                                                     <a class="btn btn-primary btn-xs"
                                                         href="{{ route('producto.edit', $producto->id) }}">
@@ -68,6 +73,7 @@
                                                     </form>
 
                                                 </td>
+                                                @endrole
                                             </tr>
                                         @endforeach
                                     @else

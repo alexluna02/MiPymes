@@ -9,11 +9,13 @@
                         <div class="pull-left">
                             <h3>Lista de Repuestos</h3>
                         </div>
+                        @role('admin')
                         <div class="pull-right">
                             <div class="btn-group">
                                 <a href="{{ route('repuesto.create') }}" class="btn btn-info">Añadir Repuesto</a>
                             </div>
                         </div>
+                        @endrole
                         <div class="table-container">
                             <table id="mytable" class="table table-bordred table-striped">
                                 <thead>
@@ -25,8 +27,10 @@
                                     <th>Marca</th>
                                     <th>Modelo</th>
                                     <th>Año de Fabricación</th>
+                                    @role('admin')
                                     <th>Editar</th>
                                     <th>Eliminar</th>
+                                    @endrole
                                 </thead>
                                 <tbody>
                                     @if ($repuestos->count())
@@ -40,6 +44,7 @@
                                                 <td>{{ $repuesto->marca }}</td>
                                                 <td>{{ $repuesto->modelo }}</td>
                                                 <td>{{ $repuesto->año_fabricacion }}</td>
+                                                @role('admin')
                                                 <td>
                                                     <a class="btn btn-primary btn-xs"
                                                         href="{{ route('repuesto.edit', $repuesto->id) }}">
@@ -56,6 +61,7 @@
                                                         </button>
                                                     </form>
                                                 </td>
+                                                @endrole
                                             </tr>
                                         @endforeach
                                     @else

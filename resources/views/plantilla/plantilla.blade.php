@@ -62,7 +62,8 @@
                     <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('Recursos/candado.png') }}" alt="Configuraciones" style="margin-right: 10px; margin-left:0px"></button>
+                        <img src="{{ asset('Recursos/candado.png') }}" alt="Configuraciones"
+                            style="margin-right: 10px; margin-left:0px"></button>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <div class="class-row"><a href="/index" class="dropdown-item">Perfil</a></div>
@@ -79,14 +80,6 @@
                             </form>
                         </div>
                     </div>
-                    <!--
-                    <form method="GET" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-warning btn-xs"> <img
-                                src="{{ asset('Recursos/candado.png') }}" alt="Foto 2"></button>
-                                <span class="caret"></span>
-                    </form>-->
-
                 </div>
     </header>
     <aside class="sidebar">
@@ -98,14 +91,22 @@
         <!-- Menú de Navegación -->
         <nav class="menu">
             <ul>
-            <li><a href="/index">Inicio</a></li>
+                <li><a href="/index">Inicio</a></li>
+                @role('admin')
+                <li><a href="/dashboard">🏠 Dashboard</a></li>
+                @endrole
+                @role('admin|vendedor')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">📦 Productos</a>
                     <ul class="submenu">
                         <li><a href="/producto">📋 Ver Productos</a></li>
+                        @role('admin')
                         <li><a href="/producto/create">➕ Añadir Productos</a></li>
+                        @endrole
                     </ul>
                 </li>
+                @endrole
+                @role('admin|vendedor')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">📂 Clientes</a>
                     <ul class="submenu">
@@ -114,6 +115,8 @@
                         <li><a href="#">✏️ Editar</a></li>
                     </ul>
                 </li>
+                @endrole
+                @role('admin')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">🛒 Proveedores</a>
                     <ul class="submenu">
@@ -121,6 +124,8 @@
                         <li><a href="/proveedor/create">➕ Añadir Proveedor</a></li>
                     </ul>
                 </li>
+                @endrole
+                @role('admin|vendedor')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">🛒 Ventas</a>
                     <ul class="submenu">
@@ -128,6 +133,8 @@
                         <li><a href="/venta/create">➕ Crear Venta</a></li>
                     </ul>
                 </li>
+                @endrole
+                @role('admin')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">💳 Método de Pago</a>
                     <ul class="submenu">
@@ -135,6 +142,8 @@
                         <li><a href="/metodo_pago/create">➕ Crear Método de Pago</a></li>
                     </ul>
                 </li>
+                @endrole
+                @role('admin')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">⚙️ Parámetros</a>
                     <ul class="submenu">
@@ -142,6 +151,8 @@
                         <li><a href="/parametro/create">➕ Crear Parámetro</a></li>
                     </ul>
                 </li>
+                @endrole
+                @role('admin|vendedor')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">🔧 Mantenimiento</a>
                     <ul class="submenu">
@@ -149,39 +160,37 @@
                         <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
                     </ul>
                 </li>
-
+                @endrole
+                @role('admin|vendedor')
                 <li>
                     <a href="#" onclick="toggleSubmenu(event)">🔧 Repuestos</a>
                     <ul class="submenu">
                         <li><a href="/repuesto">📋 Repuestos</a></li>
-                        <li><a href="/mantenimientomaquinaria/create">➕ Añadir Mantenimiento</a></li>
+                        @role("admin")
+                        <li><a href="/mantenimientomaquinaria/create">➕ Añadir Repuestos</a></li>
+                        @endrole
                     </ul>
                 </li>
-
-
+                @endrole
+                @role('admin')
+                <li>
+                    <a href="/activity_log">Auditoría</a>
+                </li>
+                @endrole
                 <li><a href="#" onclick="toggleSubmenu(event)">👤 Perfil</a></li>
             </ul>
         </nav>
 
     </aside>
 
-    <div class="container-fluid" style="margin-top: 100px">
-
         @yield('content')
-    </div>
-
-    <script>
-        function toggleSubmenu(event) {
-            event.preventDefault();
-            const parent = event.target.parentElement;
-            parent.classList.toggle('active');
-        }
-    </script>
+    
     <style type="text/css">
         .table {
             border-top: 2px solid #ccc;
         }
-/*
+
+        /*
         .text-container {
             white-space: nowrap;
             overflow: hidden;
@@ -189,7 +198,7 @@
             max-width: 200px;
             
         }*/
-        
+
         .text-container {
             max-width: 200px;
             /* Ajusta el ancho máximo según sea necesario */
@@ -203,10 +212,55 @@
             /* Permite que las palabras largas se dividan y se ajusten al contenedor */
         }
     </style>
-    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script>
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const parent = event.target.parentElement;
+            parent.classList.toggle('active');
+        }
+        // Función para mostrar/ocultar submenús
+        function toggleSubmenu(event) {
+            event.preventDefault();
+            const parent = event.target.parentElement;
+            parent.classList.toggle('active');
+        }
+
+        // Slider
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.slider-images img');
+        const totalImages = images.length;
+        const slider = document.querySelector('.slider-images');
+
+        function showImage(index) {
+            if (index >= totalImages) {
+                currentIndex = 0;
+            } else if (index < 0) {
+                currentIndex = totalImages - 1;
+            } else {
+                currentIndex = index;
+            }
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        document.getElementById('prev').addEventListener('click', (event) => {
+            event.preventDefault();
+            showImage(currentIndex - 1);
+        });
+
+        document.getElementById('next').addEventListener('click', (event) => {
+            event.preventDefault();
+            showImage(currentIndex + 1);
+        });
+
+        setInterval(() => {
+            showImage(currentIndex + 1);
+        }, 5000);
+
+        showImage(currentIndex);
+    </script>
 </body>
 
 </html>
