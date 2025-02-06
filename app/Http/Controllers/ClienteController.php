@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class ClienteController extends Controller
 {
@@ -45,7 +46,10 @@ class ClienteController extends Controller
 
     try {
         
-        Cliente::create($request->all());
+        $cliente=Cliente::create($request->all());
+        $new_value = $cliente->only(['nombre','cedula','email','direccion','telefono']);
+
+        event(new ModelCreated($cliente,  $new_value));
 
         return redirect()->route('cliente.index')->with('success', 'Registro creado satisfactoriamente');
     } catch (\Illuminate\Database\QueryException $e) {

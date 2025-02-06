@@ -29,6 +29,7 @@ class LogModelCreated
             'action' => 'created',
             'model' => end($parts),
             'model_id' => $event->model->id,
+            'new_value' => json_encode($event->new_value, JSON_PRETTY_PRINT),
             'created_at' => now()->timezone('America/Lima'),
         ]);
     }

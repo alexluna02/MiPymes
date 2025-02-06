@@ -5,13 +5,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Events\ModelCreated;
+
 use App\Events\ModelDeleted;
 
 
 class Proveedor extends Model
 {
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
     
     use HasFactory;
     public $timestamps = false;

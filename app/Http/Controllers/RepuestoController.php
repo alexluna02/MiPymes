@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Repuesto;
 use App\Models\Categoria;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class RepuestoController extends Controller
 {
@@ -44,7 +45,10 @@ class RepuestoController extends Controller
         ]);
 
         // Crear el nuevo repuesto
-        Repuesto::create($request->all());
+        $repuesto=Repuesto::create($request->all());
+        $new_value = $repuesto->only(['nombre','descripcion','precio','cantidad_stock','categoria_id','marca','modelo','año_fabricacion']);
+
+        event(new ModelCreated($repuesto,  $new_value));
 
         return redirect()->route('repuesto.index')->with('success', 'Repuesto creado satisfactoriamente');
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MantenimientoMaquinaria;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class MantenimientoMaquinariaController extends Controller
 {
@@ -42,7 +43,11 @@ class MantenimientoMaquinariaController extends Controller
         ]);
 
         // Crear un nuevo registro
-        MantenimientoMaquinaria::create($request->all());
+        $mantenimiento=MantenimientoMaquinaria::create($request->all());
+
+        $new_value = $mantenimiento->only(['venta_id','producto_id','fecha_mantenimiento','tipo_mantenimiento','descripcion','costo','estado_post_mantenimiento']);
+
+        event(new ModelCreated($mantenimiento,  $new_value));
 
         // Redirigir con mensaje de éxito
         return redirect()->route('mantenimientomaquinaria.index')->with('success', 'Registro creado con éxito');

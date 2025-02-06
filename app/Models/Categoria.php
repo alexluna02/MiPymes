@@ -17,7 +17,7 @@ class Categoria extends Model
      * @var string
      */
     protected $table = 'categorias';
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
 
     /**
      * Los atributos que son asignables masivamente.

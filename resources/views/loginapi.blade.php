@@ -35,7 +35,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'http://127.0.0.1:8000/api/login', // Asegúrate de que la URL sea correcta
+                    url: 'http://127.0.0.1:8000/api/loginapi', // Asegúrate de que la URL sea correcta
                     data: {
                         email: email,
                         password: password

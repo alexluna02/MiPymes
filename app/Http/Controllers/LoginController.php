@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use PHPOpenSourceSaver\JWTAuth\Facades\JWTAuth;
 use Spatie\Permission\Models\Role;
+use App\Events\ModelCreated;
 
 class LoginController extends Controller
 {

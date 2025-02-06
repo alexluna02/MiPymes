@@ -10,7 +10,7 @@ use App\Events\ModelDeleted;
 class Metodo_pago extends Model
 {
     use HasFactory;
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
     protected $fillable = ['metodo', 'descripcion'];
 
     protected $table='metodo_pago';

@@ -1,46 +1,118 @@
 @extends('plantilla.plantilla')
 
 @section('content')
-   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+        .header {
+            background: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .header h1 span {
+            color: #e74c3c;
+        }
+        .section {
+            padding: 40px 0;
+            text-align: center;
+            background: white;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .feature {
+            width: 30%;
+            padding: 20px;
+            background: #ecf0f1;
+            margin: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .feature i {
+            font-size: 30px;
+            color: #e74c3c;
+        }
+        #contact-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #contact-form input, #contact-form textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #contact-form button {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 20px;
+        }
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+    </style>
     
-    <!-- Header -->
-    <header class="header">
+    <header class="header"style="margin-left: 260px;">
         <div class="container">
             <h1>Bienvenidos a <span>Maq-Agro</span></h1>
             <p>Compra y Venta de Maquinaria Agrícola</p>
         </div>
     </header>
 
-
-
-      
-    <!-- About Us Section -->
-    <section id="about" class="section">
+    <section id="about" class="section" style="margin-left: 260px; ">
         <div class="container">
             <h2>Sobre Nosotros</h2>
-            <p>En <strong>Maq-Agro</strong>, nos dedicamos a ofrecer la mejor maquinaria agrícola para el sector. Con más de 10 años de experiencia en el mercado, trabajamos con los principales fabricantes de equipos agrícolas para ofrecer soluciones de alta calidad a nuestros clientes.</p>
+            <p>En <strong>Maq-Agro</strong>, nos dedicamos a ofrecer la mejor maquinaria agrícola para el sector...</p>
             <div class="features">
                 <div class="feature">
                     <i class="fas fa-tractor"></i>
                     <h3>Venta de Maquinaria</h3>
-                    <p>Contamos con una amplia gama de maquinaria agrícola, desde tractores hasta sembradoras, para todos tus cultivos.</p>
+                    <p>Contamos con una amplia gama de maquinaria agrícola...</p>
                 </div>
                 <div class="feature">
                     <i class="fas fa-sync-alt"></i>
                     <h3>Alquiler de Equipos</h3>
-                    <p>Si no deseas comprar, también ofrecemos opciones de alquiler para equipos agrícolas en excelentes condiciones.</p>
+                    <p>Si no deseas comprar, también ofrecemos opciones de alquiler...</p>
                 </div>
                 <div class="feature">
                     <i class="fas fa-cogs"></i>
                     <h3>Servicio Post-Venta</h3>
-                    <p>Brindamos soporte técnico y mantenimiento especializado para asegurarnos de que tu maquinaria siempre esté en buen estado.</p>
+                    <p>Brindamos soporte técnico y mantenimiento especializado...</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section">
+    <section id="contact" class="section"style="margin-left: 260px;">
         <div class="container">
             <h2>Contáctanos</h2>
             <form action="#" method="post" id="contact-form">
@@ -52,8 +124,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
+    <footer style="margin-left: 260px;">
         <div class="container">
             <p>&copy; 2025 Maq-Agro | Todos los derechos reservados</p>
             <div class="social-icons">
@@ -66,20 +137,15 @@
 
     <script>
         document.getElementById('contact-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevenir el comportamiento por defecto del formulario
-
-            // Validar campos del formulario
+            e.preventDefault();
             let name = document.getElementById('name').value;
             let email = document.getElementById('email').value;
             let message = document.getElementById('message').value;
-
             if (name === '' || email === '' || message === '') {
                 alert('Por favor, completa todos los campos');
             } else {
                 alert('Mensaje enviado correctamente');
-                // Aquí podrías hacer una petición para enviar los datos
             }
         });
     </script>
-
 @endsection

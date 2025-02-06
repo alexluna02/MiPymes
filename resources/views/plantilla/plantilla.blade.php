@@ -57,9 +57,9 @@
         <div class="row">
             <div class="btn-group">
                 <div class="redes-sociales">
-                    <a href="#" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
-                    <a href="#" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
-                    <a href="#" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
+                    <a href="https://www.facebook.com/MaqAgroMultirepuestos/?locale=es_LA" title="Facebook"><i class="fab fa-facebook fa-2x"></i></a>
+                    <a href="https://www.tiktok.com/@maq_agro" title="TikTok"><i class="fab fa-tiktok fa-2x"></i></a>
+                    <a href="https://w.app/fq5ci1" title="WhatsApp"><i class="fab fa-whatsapp fa-2x"></i></a>
                     <a class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('Recursos/candado.png') }}" alt="Configuraciones"

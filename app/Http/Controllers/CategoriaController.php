@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class CategoriaController extends Controller
 {
@@ -35,8 +36,11 @@ class CategoriaController extends Controller
             'descripcion' => 'nullable',
         ]);
 
-        Categoria::create($request->all());
+        $categoria=Categoria::create($request->all());
 
+        $new_value = $categoria->only(['nombre','descripcion']);
+
+        event(new ModelCreated($categoria,  $new_value));
         // Redirigir a la página indicada en el campo oculto
         if ($request->has('redirect_to')) {
             return redirect($request->input('redirect_to'))->with('success', 'Categoría creada con éxito');

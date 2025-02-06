@@ -11,5 +11,5 @@ class Cliente extends Model
 {
     use HasFactory;
     protected $fillable = ['id','nombre','cedula', 'direccion', 'telefono','email','fecha_registro'];
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
 }

@@ -10,7 +10,7 @@ use App\Events\ModelDeleted;
 class Venta extends Model
 {
     use HasFactory;
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
     protected $fillable = [
         'id', // Este no es obligatorio, pero puedes dejarlo si estás generando IDs personalizados
         'cod_factura',

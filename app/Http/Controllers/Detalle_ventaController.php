@@ -10,6 +10,7 @@ use App\Models\Producto;
 use App\Models\Venta;
 use App\Models\Detalle_venta;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class Detalle_ventaController extends Controller
 {
@@ -59,7 +60,7 @@ class Detalle_ventaController extends Controller
 
         $total_linea = ($subtotal - $descuentototal) + $impuestototal;
 
-        Detalle_venta::create([
+        $detalle=Detalle_venta::create([
             'venta_id' => $request->input('venta_id'),
             'producto_id' => $request->input('producto_id'),
             'cantidad' => $cantidad,
@@ -69,6 +70,9 @@ class Detalle_ventaController extends Controller
             'impuesto' => $impuesto,
             'total_linea' => $total_linea
         ]);
+        $new_value = $detalle->only(['venta_id','producto_id','cantidad','precio_unitario','descuento','impuesto']);
+
+        event(new ModelCreated($detalle,  $new_value));
 
         return redirect()->route('detalle_venta.index')->with('success', 'Registro creado satisfactoriamente');
     }

@@ -12,7 +12,7 @@ class MantenimientoMaquinaria extends Model
 
     // Nombre de la tabla (opcional si sigue la convención)
     protected $table = 'mantenimiento_maquinaria';
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
     // Campos asignables
     protected $fillable = [
         'producto_id',

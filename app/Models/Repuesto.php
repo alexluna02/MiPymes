@@ -10,7 +10,7 @@ use App\Events\ModelDeleted;
 class Repuesto extends Model
 {
     use HasFactory;
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
     protected $table = 'repuestos';
 
     protected $fillable = [

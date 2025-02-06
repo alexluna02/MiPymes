@@ -20,9 +20,11 @@ class ModelCreated
      */
     public $model;
 
-    public function __construct(Model $model)
+    public function __construct(Model $model,array $new_value)
     {
         $this->model = $model;
+        
+        $this->new_value = $new_value;
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Models\Parametro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class VentaController extends Controller
 {
@@ -77,10 +78,14 @@ class VentaController extends Controller
                     'total_linea' => $detalle['subtotal'] + ($detalle['subtotal'] * 0.15),
                 ]);
             }
+            
     
             // Confirmar la transacción
             DB::commit();
-    
+
+            $new_value = $venta->toArray();
+
+            event(new ModelCreated($venta,  $new_value));
             return redirect()->route('venta.index')->with('success', 'Venta registrada con éxito');
     
         } catch (\Illuminate\Database\QueryException $e) {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Metodo_pago;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class Metodo_pagoController extends Controller
 {
@@ -31,7 +32,10 @@ class Metodo_pagoController extends Controller
     public function store(Request $request)
     {
         $request->validate(['metodo' => 'required', 'descripcion']);
-        Metodo_pago::create($request->all());
+        $metodo=Metodo_pago::create($request->all());
+        $new_value = $metodo->only(['metodo','descripcion']);
+
+        event(new ModelCreated($metodo,  $new_value));
         return redirect()->route('metodo_pago.index')->with('success', 'Registro creado satisfactoriamente');
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Parametro;
 use Illuminate\Http\Request;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 class ParametroController extends Controller
 {
@@ -53,6 +54,9 @@ class ParametroController extends Controller
     
         $parametro->save();
         //Parametro::create($request->all());
+        $new_value = $parametro->only(['nombre', 'valor','descripcion','tipo','estado']);
+
+        event(new ModelCreated($parametro, $new_value));
 
         return redirect()->route('parametro.index')->with('success', 'Parámetro creado satisfactoriamente.');
     }

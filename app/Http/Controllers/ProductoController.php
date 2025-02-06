@@ -8,6 +8,7 @@ use App\Models\Proveedor;
 use App\Models\Categoria;
 use App\Models\Repuesto;
 use App\Events\ModelUpdated;
+use App\Events\ModelCreated;
 
 use Illuminate\Support\Facades\DB;
 
@@ -54,7 +55,10 @@ class ProductoController extends Controller
         ]);
 
         // Crear el nuevo producto
-        Producto::create($request->all());
+        $producto=Producto::create($request->all());
+        $new_value = $producto->only(['nombre','descripcion','proveedor_id','categoria_id','precio','cantidad_stock','marca','año_fabricacion']);
+
+        event(new ModelCreated($producto, $new_value));
 
         return redirect()->route('producto.index')->with('success', 'Producto creado satisfactoriamente');
     }

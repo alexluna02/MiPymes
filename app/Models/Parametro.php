@@ -12,5 +12,5 @@ class Parametro extends Model
     use HasFactory;
 
     protected $fillable = ['nombre', 'valor', 'descripcion', 'tipo','estado'];
-    protected $dispatchesEvents=['created'=>ModelCreated::class,'deleted'=>ModelDeleted::class];
+    protected $dispatchesEvents=['deleted'=>ModelDeleted::class];
 }

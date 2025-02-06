@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
 
 use App\Events\ModelUpdated;
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
+use App\Events\ModelCreated;
 
 class ProveedorController extends Controller
 {
@@ -36,8 +38,30 @@ class ProveedorController extends Controller
             'telefono' => 'required',
             'email' => 'required'
         ]);
-        Proveedor::create($request->all());
+        try {
+        $proveedor=Proveedor::create($request->all());
+        
+        $new_value = $proveedor->only(['nombre','telefono','email','direccion']);
+        
+        event(new ModelCreated($proveedor, $new_value));
         return redirect()->route('proveedor.index')->with('success', 'Registrado con exito');
+
+    } catch (\Illuminate\Database\QueryException $e) {
+        // Revertir la transacción en caso de error
+        DB::rollBack();
+
+        // Verificar si el error proviene de un trigger
+        if ($e->getCode() === 'P0001') { // Código de error para excepciones RAISE en PostgreSQL
+            return redirect()->back()->withErrors(['El nombre de proveedor no debe contener carateres especiales ']);
+        }
+
+        // Otros errores de la base de datosS
+        return redirect()->back()->withErrors(['error' => 'Error al registrar la venta: ' . $e->getMessage()]);
+    } catch (\Exception $e) {
+        // Manejo de otros errores
+        DB::rollBack();
+        return redirect()->back()->withErrors(['error' => 'Error inesperado: ' . $e->getMessage()]);
+    }
     }
 
     /**
